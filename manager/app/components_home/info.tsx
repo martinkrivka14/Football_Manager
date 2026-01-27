@@ -1,0 +1,17 @@
+interface InfoProps {
+    name: string
+    info: string
+  }
+
+export default function Info(props: InfoProps) {
+    return(
+    <div className="text-center">
+        <h1 className="mb-4 text-5xl font-bold text-zinc-800 dark:text-zinc-200">
+          {props.name}
+        </h1>
+        <p className="mb-8 text-zinc-600 dark:text-zinc-400">
+          {props.info}
+        </p>
+      </div>
+    );
+}

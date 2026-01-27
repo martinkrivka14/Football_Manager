@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  city      String
+  createdAt DateTime @default(now())
+  founded   Int?
+  updatedAt DateTime @updatedAt
+  players   Player[]
+  pitches   Pitch[]  @relation("TeamPitches")
+}
+
+model Player {
+  id           Int      @id @default(autoincrement())
+  position     String
+  teamId       Int
+  createdAt    DateTime @default(now())
+  firstName    String
+  jerseyNumber Int
+  lastName     String
+  updatedAt    DateTime @updatedAt
+  team         Team     @relation(fields: [teamId], references: [id])
+}
+
+model Pitch {
+  id        Int      @id @default(autoincrement())
+  name      String
+  capacity  Int?
+  createdAt DateTime @default(now())
+  location  String
+  surface   String
+  updatedAt DateTime @updatedAt
+  teams     Team[]   @relation("TeamPitches")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  loggedIn   Boolean  @default(false)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
