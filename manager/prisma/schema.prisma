@@ -8,45 +8,43 @@ datasource db {
 }
 
 model Team {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  city      String
-  createdAt DateTime @default(now())
+  id        Int      @id
+  code      String
+  country   String
   founded   Int?
-  updatedAt DateTime @updatedAt
-  players   Player[]
-  pitches   Pitch[]  @relation("TeamPitches")
+  national Boolean
 }
 
 model Player {
-  id           Int      @id @default(autoincrement())
-  position     String
-  teamId       Int
-  createdAt    DateTime @default(now())
-  firstName    String
-  jerseyNumber Int
-  lastName     String
-  updatedAt    DateTime @updatedAt
-  team         Team     @relation(fields: [teamId], references: [id])
+  id            Int      @id
+  firstname      String  
+  lastname       String
+  age             Int
+  dateOfBirth     DateTime
+  placeOfBirth    String
+  countryOfBirth  String
+  nationality     String
+  height          Int
+  weight          Int
+  jerseyNumber    Int
+  position        String
 }
 
-model Pitch {
-  id        Int      @id @default(autoincrement())
+model Venue {
+  id        Int      @id
   name      String
-  capacity  Int?
-  createdAt DateTime @default(now())
-  location  String
+  address  String
+  city    String
+  capacity  Int
   surface   String
-  updatedAt DateTime @updatedAt
-  teams     Team[]   @relation("TeamPitches")
 }
 
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
-  loggedIn   Boolean  @default(false)
-  
+  loggedIn  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  username  String   @unique
 }

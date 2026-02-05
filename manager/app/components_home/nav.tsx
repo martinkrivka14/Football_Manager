@@ -8,7 +8,7 @@ export default function Nav() {
 
   
         <nav className="fixed top-4 left-1/2 -translate-x-1/2 flex justify-around items-center border-b-2 border-white w-[95vw] max-w-4xl h-16 px-8 rounded-lg bg-black/50 backdrop-blur-xl text-white">
-
+          
 
           <Link href="/">
           <h3 className="text-xl text-white font-bold cursor-pointer transition-transform hover:">
