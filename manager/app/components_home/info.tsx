@@ -7,10 +7,10 @@ export default function Info(props: InfoProps) {
     return(
       
     <div className="text-center mb-36">
-        <h1 className="mb-4 text-5xl font-bold text-zinc-800 dark:text-zinc-200">
+        <h1 className="mb-4 text-5xl font-bold text-white  dark:text-zinc-200">
           {props.name}
         </h1>
-        <p className="mb-8 text-zinc-600 dark:text-zinc-400">
+        <p className="mb-8 text-white dark:text-zinc-400">
           {props.info}
 
           

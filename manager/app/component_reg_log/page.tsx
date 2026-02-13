@@ -7,6 +7,10 @@ import FormRegLog from "./components/formRegLog";
 
 export default function RegLog() {
     return(
+
+        <div className="flex min-h-screen items-center justify-center  font-sans bg-black">
+
+        
         <>
 {/*}
         <Suspense fallback = {<LoadingFindingUser></LoadingFindingUser>}>
@@ -21,6 +25,8 @@ export default function RegLog() {
         <Footer/>
 
         </>
+
+        </div>
 
 
     );

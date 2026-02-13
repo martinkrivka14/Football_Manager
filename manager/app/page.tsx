@@ -1,7 +1,4 @@
 import Image from "next/image";
-import FormForPitch from "./form/FormForPitch";
-import { PitchesInfo } from "./info/PitchesInfo";
-import { AddingButton } from "./buttons/AddingButton";
 import Nav from "./components_home/nav";
 import Info from "./components_home/info";
 import { Play } from "next/font/google";
@@ -14,7 +11,7 @@ export default function Home() {
 
 
   return (
-    <div className="flex min-h-screen items-center justify-center  font-sans dark:bg-black">
+    <div className="flex min-h-screen items-center justify-center  font-sans bg-black">
 
     
 

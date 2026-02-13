@@ -8,11 +8,27 @@ datasource db {
 }
 
 model Team {
-  id        Int      @id
-  code      String
-  country   String
+  id        Int      @id @default(autoincrement())
+  name      String?
+  code      String? 
+  country   String?
   founded   Int?
-  national Boolean
+  national  Boolean  @default(false)
+  logo      String?
+
+  venueId   Int?
+  venue     Venue?   @relation(fields: [venueId], references: [id])
+}
+
+model Venue {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  address  String?
+  city    String?
+  capacity  Int?
+  surface   String?
+
+  teams     Team[]
 }
 
 model Player {
@@ -30,14 +46,7 @@ model Player {
   position        String
 }
 
-model Venue {
-  id        Int      @id
-  name      String
-  address  String
-  city    String
-  capacity  Int
-  surface   String
-}
+
 
 model User {
   id        Int      @id @default(autoincrement())
