@@ -13,6 +13,7 @@ const teamsToInsert = teamsArray
     .filter((item: any) => item?.team?.id != null) 
     .map((item: any) => ({
         
+        
         id: Number(item.team.id),
         name: item.team.name || null,
         code: item.team.code || "null",
@@ -22,22 +23,10 @@ const teamsToInsert = teamsArray
             : null,
         national: Boolean(item.team.national),
         logo: item.team.logo || null,
-       /* venue: item.venue
-      ? {
-          connectOrCreate: {
-            where: { id: Number(item.venue.id) },
-            create: {
-              id: Number(item.venue.id),
-              name: item.venue.name || "null",
-              address: item.venue.address || "null",
-              city: item.venue.city || "null",
-              capacity: Number(item.venue.capacity) || null,
-              surface: item.venue.surface || "null"
-            }
-          }
-        }
-      : undefined*/
+
     }));
+
+
 
         const hasInvalidId = teamsToInsert.some(t => isNaN(t.id));
         console.log("Any NaN IDs?:", hasInvalidId);
