@@ -60,7 +60,22 @@ export type League = Prisma.LeagueModel
  */
 export type Player = Prisma.PlayerModel
 /**
+ * Model Account
+ * 
+ */
+export type Account = Prisma.AccountModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel
+/**
  * Model User
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model VerificationRequest
+ * 
+ */
+export type VerificationRequest = Prisma.VerificationRequestModel
