@@ -1,6 +1,6 @@
 export default function InfoGame(){
     return(
-<div className="grid grid-cols-1 gap-4 max-w-2xl mx-auto mt-16 p-10
+<div className="grid grid-cols-1 gap-4 max-w-2xl mx-auto p-10
                 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900
                 rounded-3xl border border-white/10 shadow-2xl
                 backdrop-blur-xl text-center">

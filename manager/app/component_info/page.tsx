@@ -15,6 +15,12 @@ export default function Info() {
   });
 };
 
+  const handleSubmitVenues = async () => {
+    await fetch('/api/venue', {
+    method: 'GET'
+  });
+};
+
 
     return(
 

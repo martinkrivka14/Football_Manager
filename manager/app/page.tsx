@@ -18,7 +18,7 @@ export default function Home() {
       <Nav/>
       <Info name={"Football Manager"} info={"Welcome to the Football Manager game!"}/>
       <div className="flex justify-center absolute mt-50">
-        <Link href="/component_play"> <PlayButton/> </Link>
+        <Link href="/play"> <PlayButton/> </Link>
         
       </div>
 

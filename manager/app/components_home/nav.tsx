@@ -16,7 +16,7 @@ export default function Nav() {
           </h3>
           </Link>
 
-          <Link href="/component_play">
+          <Link href="/play">
           <h3 className="text-xl text-white font-bold cursor-pointer transition-transform hover:scale-110">
             Play
           </h3>
