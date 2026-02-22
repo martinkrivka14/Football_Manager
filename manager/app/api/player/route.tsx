@@ -3,12 +3,12 @@ import { NextResponse } from 'next/server';
 import React from 'react';
 import prisma from "../../../lib/db";
 import { redirect } from 'next/dist/server/api-utils';
-import { pushTeamsToDb } from '../db/teamsToDb';
+import { pushPlayersToDb } from '../db/playersToDb';
 
 export async function GET(request: NextRequest) {
 
   try {
-    const response = await fetch(process.env.API_TEAM_URL as string, {
+    const response = await fetch(process.env.API_PLAYER_URL as string, {
       method: 'GET',
       headers: {
         'x-apisports-key': process.env.API_SPORTS_KEY as string,
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json();
 
-    await pushTeamsToDb(data);
+    await pushPlayersToDb(data);
 
     return NextResponse.json({ 
       success: true, 
