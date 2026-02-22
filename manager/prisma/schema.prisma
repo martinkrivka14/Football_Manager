@@ -15,9 +15,9 @@ model Team {
   founded   Int?
   national  Boolean  @default(false)
   logo      String?
-
-  venueId   Int?
-  venue     Venue?   @relation(fields: [venueId], references: [id])
+  leagueId  Int?
+  league    League? @relation(fields: [leagueId], references: [id])
+  venues Venue?
 }
 
 model Venue {
@@ -27,24 +27,32 @@ model Venue {
   city    String?
   capacity  Int?
   surface   String?
+  image     String?
+  team    Team? @relation(fields: [teamId], references: [id])
+  teamId Int? @unique
+}
 
-  teams     Team[]
+model League {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  logo      String?
+  teams Team[]
 }
 
 model Player {
-  id            Int      @id
-  firstname      String  
-  lastname       String
-  age             Int
-  dateOfBirth     DateTime
-  placeOfBirth    String
-  countryOfBirth  String
-  nationality     String
-  height          Int
-  weight          Int
-  jerseyNumber    Int
-  position        String
+  id            Int      @id @default(autoincrement())
+  name         String?
+  firstname      String? 
+  lastname       String?
+  age             Int?
+  nationality     String?
+  height          Int?
+  weight          Int?
+  jerseyNumber    Int?
+  position        String?
+  photo           String?
 }
+
 
 
 
