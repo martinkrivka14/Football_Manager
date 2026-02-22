@@ -5,8 +5,9 @@
   "scripts": {
     "lint": "eslint",
     "format": "biome format --write",
-    "dev": "next dev",
-    "build": "prisma generate && next build",
+    "dev": "next dev",  
+    "postinstall": "prisma generate",
+    "build": "next build",
     "start": "next start",
     "lint:fix": "eslint --fix"
   },
