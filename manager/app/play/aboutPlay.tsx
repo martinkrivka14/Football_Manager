@@ -25,7 +25,7 @@ export default function AboutPlay(){
     <div className="mt-10 flex justify-center gap-4">
     <Link href={"../game"}>
       <button className="px-7 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 transition font-semibold text-white">
-        Start Game
+        Start Game Now
       </button>
     </Link>
     </div>
