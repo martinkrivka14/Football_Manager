@@ -16,52 +16,116 @@ model Team {
   national  Boolean  @default(false)
   logo      String?
   leagueId  Int?
-  league    League? @relation(fields: [leagueId], references: [id])
-  venues Venue?
+  league    League?  @relation(fields: [leagueId], references: [id])
+  venues    Venue?
+  players   Player[] // NOVÉ: Tým má pole (seznam) svých hráčů
 }
 
 model Venue {
   id        Int      @id @default(autoincrement())
   name      String?
-  address  String?
-  city    String?
+  address   String?
+  city      String?
   capacity  Int?
   surface   String?
   image     String?
-  team    Team? @relation(fields: [teamId], references: [id])
-  teamId Int? @unique
+  team      Team?    @relation(fields: [teamId], references: [id])
+  teamId    Int?     @unique
 }
 
 model League {
   id        Int      @id @default(autoincrement())
   name      String?
   logo      String?
-  teams Team[]
+  teams     Team[]
 }
 
 model Player {
   id            Int      @id @default(autoincrement())
-  name         String?
-  firstname      String? 
-  lastname       String?
-  age             Int?
-  nationality     String?
-  height          Int?
-  weight          Int?
-  jerseyNumber    Int?
-  position        String?
-  photo           String?
+  name          String?
+  firstname     String? 
+  lastname      String?
+  age           Int?
+  nationality   String?
+  height        Int?
+  weight        Int?
+  jerseyNumber  Int?
+  position      String?
+  photo         String?
+  overall       Int?     // NOVÉ: Celkové hodnocení hráče (0-100)
+  teamId        Int?     // NOVÉ: ID týmu, za který hráč hraje
+  team          Team?    @relation(fields: [teamId], references: [id]) // NOVÉ: Propojení na model Team
 }
 
 
 
 
+ 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  loggedIn  Boolean  @default(false)
+  id            String          @id @default(cuid())
+  name          String?
+  email         String          @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+ 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  username  String   @unique
+}
+ 
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+ 
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@id([identifier, token])
+}
+
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([userId, credentialID])
 }
