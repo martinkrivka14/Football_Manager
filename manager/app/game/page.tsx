@@ -10,8 +10,6 @@ export default function MainPageGame(){
         <NavMenuGame/>
             </>
         </div>
-
-
     );
 
 }
