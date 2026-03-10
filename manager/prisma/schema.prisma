@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  previewFeatures = ["driverAdapters"]
+  output = "..app/generated/prisma"
 }
 
 datasource db {
@@ -56,7 +57,6 @@ model Player {
   teamId        Int?     // NOVÉ: ID týmu, za který hráč hraje
   team          Team?    @relation(fields: [teamId], references: [id]) // NOVÉ: Propojení na model Team
 }
-
 
 
 
@@ -128,4 +128,6 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@id([userId, credentialID])
+
 }
+
