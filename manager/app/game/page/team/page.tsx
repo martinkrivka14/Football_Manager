@@ -26,10 +26,9 @@ export default async function TeamPage() {
           players: {
             include: { originalPlayer: true }
           },
-          // NOVĚ NAČÍTÁME I AKTUÁLNÍ SESTAVU
-          lineups: {
+          saveLineups: {
             include: { entries: true },
-            take: 1 // Bereme jen tu první/hlavní
+            take: 1
           }
         }
       }
