@@ -44,7 +44,18 @@ export default async function TeamPage() {
  
 
   // Pro snadnější hledání si vytáhneme jen 'entries' z naší uložené sestavy
-  const currentLineupEntries = activeSave.userTeam.lineups[0]?.entries || [];
+  type CurrentLineupEntry = {
+    savePlayerId: string;
+    role: string;
+    pitchPosition: string | null;
+  };
+
+  const currentLineupEntries =
+    (
+      activeSave.userTeam.lineups as Array<{
+        entries: CurrentLineupEntry[];
+      }>
+    )[0]?.entries ?? [];
 
   // Zploštíme data pro klientskou komponentu
   const players = activeSave.userTeam.players.map(p => {
@@ -68,11 +79,10 @@ export default async function TeamPage() {
   return (
     <div className="p-6 text-white h-full">
       <h1 className="text-3xl font-bold mb-6">Správa Týmu</h1>
-      {/* Musíme předat i teamId, aby akce věděla, pro koho to ukládá */}
       <TeamManagementClient 
         initialPlayers={players} 
-        saveId={activeSave.id} 
-        teamId={activeSave.userTeam.id} 
+        saveId={activeSave.id}
+        teamId={activeSave.userTeam.id}
       />
     </div>
   );

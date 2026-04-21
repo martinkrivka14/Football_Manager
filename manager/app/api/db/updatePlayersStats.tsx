@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@/app/generated/prisma";
 import prisma from "../../../lib/db";
 
 export async function updatePlayersStats() {

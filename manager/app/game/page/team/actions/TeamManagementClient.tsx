@@ -121,13 +121,21 @@ const PlayerCard = ({ player, isField = false }: { player: PlayerData, isField?:
   );
 };
 
+type PlayerUpdateData = {
+  id: string;
+  squadRole: string;
+  pitchPosition: string | null;
+};
+
 
 export default function TeamManagementClient({ 
   initialPlayers, 
-  saveId 
+  saveId,
+  teamId
 }: { 
   initialPlayers: PlayerData[], 
-  saveId: string 
+  saveId: string,
+  teamId: string
 }) {
   const [players, setPlayers] = useState<PlayerData[]>(initialPlayers);
   const [isSaving, setIsSaving] = useState(false);
@@ -200,10 +208,10 @@ export default function TeamManagementClient({
     const updates = players.map(p => ({
       id: p.id,
       squadRole: p.squadRole,
-      pitchPosition: p.position,
+      pitchPosition: p.pitchPosition,
     }));
 
-    const result = await saveLineup(saveId, updates);
+    const result = await saveLineup(saveId, teamId, updates);
     
     setIsSaving(false);
     if (result.success) {
