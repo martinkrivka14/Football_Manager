@@ -51,14 +51,14 @@ export default async function TeamPage() {
 
   const currentLineupEntries =
     (
-      activeSave.userTeam.lineups as Array<{
+      activeSave.userTeam.saveLineups as Array<{
         entries: CurrentLineupEntry[];
       }>
     )[0]?.entries ?? [];
 
-  // Zploštíme data pro klientskou komponentu
+ 
   const players = activeSave.userTeam.players.map(p => {
-    // Podíváme se, jestli je tento hráč zapsaný v sestavě
+    
     const lineupEntry = currentLineupEntries.find(entry => entry.savePlayerId === p.id);
 
     return {
@@ -67,7 +67,7 @@ export default async function TeamPage() {
       position: p.originalPlayer.position || "Záložník",
       overall: p.overall || p.originalPlayer.overall || 0,
       
-      // Pokud záznam existuje, vezmeme data z něj, jinak je to "RESERVE"
+      
       squadRole: lineupEntry ? lineupEntry.role : "RESERVE", 
       pitchPosition: lineupEntry ? lineupEntry.pitchPosition : null,
       
