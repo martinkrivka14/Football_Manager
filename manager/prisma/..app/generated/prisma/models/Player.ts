@@ -32,6 +32,8 @@ export type PlayerAvgAggregateOutputType = {
   height: number | null
   weight: number | null
   jerseyNumber: number | null
+  overall: number | null
+  teamId: number | null
 }
 
 export type PlayerSumAggregateOutputType = {
@@ -40,6 +42,8 @@ export type PlayerSumAggregateOutputType = {
   height: number | null
   weight: number | null
   jerseyNumber: number | null
+  overall: number | null
+  teamId: number | null
 }
 
 export type PlayerMinAggregateOutputType = {
@@ -54,6 +58,8 @@ export type PlayerMinAggregateOutputType = {
   jerseyNumber: number | null
   position: string | null
   photo: string | null
+  overall: number | null
+  teamId: number | null
 }
 
 export type PlayerMaxAggregateOutputType = {
@@ -68,6 +74,8 @@ export type PlayerMaxAggregateOutputType = {
   jerseyNumber: number | null
   position: string | null
   photo: string | null
+  overall: number | null
+  teamId: number | null
 }
 
 export type PlayerCountAggregateOutputType = {
@@ -82,6 +90,8 @@ export type PlayerCountAggregateOutputType = {
   jerseyNumber: number
   position: number
   photo: number
+  overall: number
+  teamId: number
   _all: number
 }
 
@@ -92,6 +102,8 @@ export type PlayerAvgAggregateInputType = {
   height?: true
   weight?: true
   jerseyNumber?: true
+  overall?: true
+  teamId?: true
 }
 
 export type PlayerSumAggregateInputType = {
@@ -100,6 +112,8 @@ export type PlayerSumAggregateInputType = {
   height?: true
   weight?: true
   jerseyNumber?: true
+  overall?: true
+  teamId?: true
 }
 
 export type PlayerMinAggregateInputType = {
@@ -114,6 +128,8 @@ export type PlayerMinAggregateInputType = {
   jerseyNumber?: true
   position?: true
   photo?: true
+  overall?: true
+  teamId?: true
 }
 
 export type PlayerMaxAggregateInputType = {
@@ -128,6 +144,8 @@ export type PlayerMaxAggregateInputType = {
   jerseyNumber?: true
   position?: true
   photo?: true
+  overall?: true
+  teamId?: true
 }
 
 export type PlayerCountAggregateInputType = {
@@ -142,6 +160,8 @@ export type PlayerCountAggregateInputType = {
   jerseyNumber?: true
   position?: true
   photo?: true
+  overall?: true
+  teamId?: true
   _all?: true
 }
 
@@ -243,6 +263,8 @@ export type PlayerGroupByOutputType = {
   jerseyNumber: number | null
   position: string | null
   photo: string | null
+  overall: number | null
+  teamId: number | null
   _count: PlayerCountAggregateOutputType | null
   _avg: PlayerAvgAggregateOutputType | null
   _sum: PlayerSumAggregateOutputType | null
@@ -280,6 +302,10 @@ export type PlayerWhereInput = {
   jerseyNumber?: Prisma.IntNullableFilter<"Player"> | number | null
   position?: Prisma.StringNullableFilter<"Player"> | string | null
   photo?: Prisma.StringNullableFilter<"Player"> | string | null
+  overall?: Prisma.IntNullableFilter<"Player"> | number | null
+  teamId?: Prisma.IntNullableFilter<"Player"> | number | null
+  team?: Prisma.XOR<Prisma.TeamNullableScalarRelationFilter, Prisma.TeamWhereInput> | null
+  savePlayers?: Prisma.SavePlayerListRelationFilter
 }
 
 export type PlayerOrderByWithRelationInput = {
@@ -294,6 +320,10 @@ export type PlayerOrderByWithRelationInput = {
   jerseyNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   position?: Prisma.SortOrderInput | Prisma.SortOrder
   photo?: Prisma.SortOrderInput | Prisma.SortOrder
+  overall?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamId?: Prisma.SortOrderInput | Prisma.SortOrder
+  team?: Prisma.TeamOrderByWithRelationInput
+  savePlayers?: Prisma.SavePlayerOrderByRelationAggregateInput
 }
 
 export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -311,6 +341,10 @@ export type PlayerWhereUniqueInput = Prisma.AtLeast<{
   jerseyNumber?: Prisma.IntNullableFilter<"Player"> | number | null
   position?: Prisma.StringNullableFilter<"Player"> | string | null
   photo?: Prisma.StringNullableFilter<"Player"> | string | null
+  overall?: Prisma.IntNullableFilter<"Player"> | number | null
+  teamId?: Prisma.IntNullableFilter<"Player"> | number | null
+  team?: Prisma.XOR<Prisma.TeamNullableScalarRelationFilter, Prisma.TeamWhereInput> | null
+  savePlayers?: Prisma.SavePlayerListRelationFilter
 }, "id">
 
 export type PlayerOrderByWithAggregationInput = {
@@ -325,6 +359,8 @@ export type PlayerOrderByWithAggregationInput = {
   jerseyNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   position?: Prisma.SortOrderInput | Prisma.SortOrder
   photo?: Prisma.SortOrderInput | Prisma.SortOrder
+  overall?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PlayerCountOrderByAggregateInput
   _avg?: Prisma.PlayerAvgOrderByAggregateInput
   _max?: Prisma.PlayerMaxOrderByAggregateInput
@@ -347,6 +383,8 @@ export type PlayerScalarWhereWithAggregatesInput = {
   jerseyNumber?: Prisma.IntNullableWithAggregatesFilter<"Player"> | number | null
   position?: Prisma.StringNullableWithAggregatesFilter<"Player"> | string | null
   photo?: Prisma.StringNullableWithAggregatesFilter<"Player"> | string | null
+  overall?: Prisma.IntNullableWithAggregatesFilter<"Player"> | number | null
+  teamId?: Prisma.IntNullableWithAggregatesFilter<"Player"> | number | null
 }
 
 export type PlayerCreateInput = {
@@ -360,6 +398,9 @@ export type PlayerCreateInput = {
   jerseyNumber?: number | null
   position?: string | null
   photo?: string | null
+  overall?: number | null
+  team?: Prisma.TeamCreateNestedOneWithoutPlayersInput
+  savePlayers?: Prisma.SavePlayerCreateNestedManyWithoutOriginalPlayerInput
 }
 
 export type PlayerUncheckedCreateInput = {
@@ -374,6 +415,9 @@ export type PlayerUncheckedCreateInput = {
   jerseyNumber?: number | null
   position?: string | null
   photo?: string | null
+  overall?: number | null
+  teamId?: number | null
+  savePlayers?: Prisma.SavePlayerUncheckedCreateNestedManyWithoutOriginalPlayerInput
 }
 
 export type PlayerUpdateInput = {
@@ -387,6 +431,9 @@ export type PlayerUpdateInput = {
   jerseyNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  overall?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  team?: Prisma.TeamUpdateOneWithoutPlayersNestedInput
+  savePlayers?: Prisma.SavePlayerUpdateManyWithoutOriginalPlayerNestedInput
 }
 
 export type PlayerUncheckedUpdateInput = {
@@ -401,6 +448,9 @@ export type PlayerUncheckedUpdateInput = {
   jerseyNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  overall?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  savePlayers?: Prisma.SavePlayerUncheckedUpdateManyWithoutOriginalPlayerNestedInput
 }
 
 export type PlayerCreateManyInput = {
@@ -415,6 +465,8 @@ export type PlayerCreateManyInput = {
   jerseyNumber?: number | null
   position?: string | null
   photo?: string | null
+  overall?: number | null
+  teamId?: number | null
 }
 
 export type PlayerUpdateManyMutationInput = {
@@ -428,6 +480,7 @@ export type PlayerUpdateManyMutationInput = {
   jerseyNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  overall?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type PlayerUncheckedUpdateManyInput = {
@@ -442,6 +495,18 @@ export type PlayerUncheckedUpdateManyInput = {
   jerseyNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  overall?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type PlayerListRelationFilter = {
+  every?: Prisma.PlayerWhereInput
+  some?: Prisma.PlayerWhereInput
+  none?: Prisma.PlayerWhereInput
+}
+
+export type PlayerOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type PlayerCountOrderByAggregateInput = {
@@ -456,6 +521,8 @@ export type PlayerCountOrderByAggregateInput = {
   jerseyNumber?: Prisma.SortOrder
   position?: Prisma.SortOrder
   photo?: Prisma.SortOrder
+  overall?: Prisma.SortOrder
+  teamId?: Prisma.SortOrder
 }
 
 export type PlayerAvgOrderByAggregateInput = {
@@ -464,6 +531,8 @@ export type PlayerAvgOrderByAggregateInput = {
   height?: Prisma.SortOrder
   weight?: Prisma.SortOrder
   jerseyNumber?: Prisma.SortOrder
+  overall?: Prisma.SortOrder
+  teamId?: Prisma.SortOrder
 }
 
 export type PlayerMaxOrderByAggregateInput = {
@@ -478,6 +547,8 @@ export type PlayerMaxOrderByAggregateInput = {
   jerseyNumber?: Prisma.SortOrder
   position?: Prisma.SortOrder
   photo?: Prisma.SortOrder
+  overall?: Prisma.SortOrder
+  teamId?: Prisma.SortOrder
 }
 
 export type PlayerMinOrderByAggregateInput = {
@@ -492,6 +563,8 @@ export type PlayerMinOrderByAggregateInput = {
   jerseyNumber?: Prisma.SortOrder
   position?: Prisma.SortOrder
   photo?: Prisma.SortOrder
+  overall?: Prisma.SortOrder
+  teamId?: Prisma.SortOrder
 }
 
 export type PlayerSumOrderByAggregateInput = {
@@ -500,8 +573,315 @@ export type PlayerSumOrderByAggregateInput = {
   height?: Prisma.SortOrder
   weight?: Prisma.SortOrder
   jerseyNumber?: Prisma.SortOrder
+  overall?: Prisma.SortOrder
+  teamId?: Prisma.SortOrder
 }
 
+export type PlayerScalarRelationFilter = {
+  is?: Prisma.PlayerWhereInput
+  isNot?: Prisma.PlayerWhereInput
+}
+
+export type PlayerCreateNestedManyWithoutTeamInput = {
+  create?: Prisma.XOR<Prisma.PlayerCreateWithoutTeamInput, Prisma.PlayerUncheckedCreateWithoutTeamInput> | Prisma.PlayerCreateWithoutTeamInput[] | Prisma.PlayerUncheckedCreateWithoutTeamInput[]
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutTeamInput | Prisma.PlayerCreateOrConnectWithoutTeamInput[]
+  createMany?: Prisma.PlayerCreateManyTeamInputEnvelope
+  connect?: Prisma.PlayerWhereUniqueInput | Prisma.PlayerWhereUniqueInput[]
+}
+
+export type PlayerUncheckedCreateNestedManyWithoutTeamInput = {
+  create?: Prisma.XOR<Prisma.PlayerCreateWithoutTeamInput, Prisma.PlayerUncheckedCreateWithoutTeamInput> | Prisma.PlayerCreateWithoutTeamInput[] | Prisma.PlayerUncheckedCreateWithoutTeamInput[]
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutTeamInput | Prisma.PlayerCreateOrConnectWithoutTeamInput[]
+  createMany?: Prisma.PlayerCreateManyTeamInputEnvelope
+  connect?: Prisma.PlayerWhereUniqueInput | Prisma.PlayerWhereUniqueInput[]
+}
+
+export type PlayerUpdateManyWithoutTeamNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerCreateWithoutTeamInput, Prisma.PlayerUncheckedCreateWithoutTeamInput> | Prisma.PlayerCreateWithoutTeamInput[] | Prisma.PlayerUncheckedCreateWithoutTeamInput[]
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutTeamInput | Prisma.PlayerCreateOrConnectWithoutTeamInput[]
+  upsert?: Prisma.PlayerUpsertWithWhereUniqueWithoutTeamInput | Prisma.PlayerUpsertWithWhereUniqueWithoutTeamInput[]
+  createMany?: Prisma.PlayerCreateManyTeamInputEnvelope
+  set?: Prisma.PlayerWhereUniqueInput | Prisma.PlayerWhereUniqueInput[]
+  disconnect?: Prisma.PlayerWhereUniqueInput | Prisma.PlayerWhereUniqueInput[]
+  delete?: Prisma.PlayerWhereUniqueInput | Prisma.PlayerWhereUniqueInput[]
+  connect?: Prisma.PlayerWhereUniqueInput | Prisma.PlayerWhereUniqueInput[]
+  update?: Prisma.PlayerUpdateWithWhereUniqueWithoutTeamInput | Prisma.PlayerUpdateWithWhereUniqueWithoutTeamInput[]
+  updateMany?: Prisma.PlayerUpdateManyWithWhereWithoutTeamInput | Prisma.PlayerUpdateManyWithWhereWithoutTeamInput[]
+  deleteMany?: Prisma.PlayerScalarWhereInput | Prisma.PlayerScalarWhereInput[]
+}
+
+export type PlayerUncheckedUpdateManyWithoutTeamNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerCreateWithoutTeamInput, Prisma.PlayerUncheckedCreateWithoutTeamInput> | Prisma.PlayerCreateWithoutTeamInput[] | Prisma.PlayerUncheckedCreateWithoutTeamInput[]
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutTeamInput | Prisma.PlayerCreateOrConnectWithoutTeamInput[]
+  upsert?: Prisma.PlayerUpsertWithWhereUniqueWithoutTeamInput | Prisma.PlayerUpsertWithWhereUniqueWithoutTeamInput[]
+  createMany?: Prisma.PlayerCreateManyTeamInputEnvelope
+  set?: Prisma.PlayerWhereUniqueInput | Prisma.PlayerWhereUniqueInput[]
+  disconnect?: Prisma.PlayerWhereUniqueInput | Prisma.PlayerWhereUniqueInput[]
+  delete?: Prisma.PlayerWhereUniqueInput | Prisma.PlayerWhereUniqueInput[]
+  connect?: Prisma.PlayerWhereUniqueInput | Prisma.PlayerWhereUniqueInput[]
+  update?: Prisma.PlayerUpdateWithWhereUniqueWithoutTeamInput | Prisma.PlayerUpdateWithWhereUniqueWithoutTeamInput[]
+  updateMany?: Prisma.PlayerUpdateManyWithWhereWithoutTeamInput | Prisma.PlayerUpdateManyWithWhereWithoutTeamInput[]
+  deleteMany?: Prisma.PlayerScalarWhereInput | Prisma.PlayerScalarWhereInput[]
+}
+
+export type PlayerCreateNestedOneWithoutSavePlayersInput = {
+  create?: Prisma.XOR<Prisma.PlayerCreateWithoutSavePlayersInput, Prisma.PlayerUncheckedCreateWithoutSavePlayersInput>
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutSavePlayersInput
+  connect?: Prisma.PlayerWhereUniqueInput
+}
+
+export type PlayerUpdateOneRequiredWithoutSavePlayersNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayerCreateWithoutSavePlayersInput, Prisma.PlayerUncheckedCreateWithoutSavePlayersInput>
+  connectOrCreate?: Prisma.PlayerCreateOrConnectWithoutSavePlayersInput
+  upsert?: Prisma.PlayerUpsertWithoutSavePlayersInput
+  connect?: Prisma.PlayerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PlayerUpdateToOneWithWhereWithoutSavePlayersInput, Prisma.PlayerUpdateWithoutSavePlayersInput>, Prisma.PlayerUncheckedUpdateWithoutSavePlayersInput>
+}
+
+export type PlayerCreateWithoutTeamInput = {
+  name?: string | null
+  firstname?: string | null
+  lastname?: string | null
+  age?: number | null
+  nationality?: string | null
+  height?: number | null
+  weight?: number | null
+  jerseyNumber?: number | null
+  position?: string | null
+  photo?: string | null
+  overall?: number | null
+  savePlayers?: Prisma.SavePlayerCreateNestedManyWithoutOriginalPlayerInput
+}
+
+export type PlayerUncheckedCreateWithoutTeamInput = {
+  id?: number
+  name?: string | null
+  firstname?: string | null
+  lastname?: string | null
+  age?: number | null
+  nationality?: string | null
+  height?: number | null
+  weight?: number | null
+  jerseyNumber?: number | null
+  position?: string | null
+  photo?: string | null
+  overall?: number | null
+  savePlayers?: Prisma.SavePlayerUncheckedCreateNestedManyWithoutOriginalPlayerInput
+}
+
+export type PlayerCreateOrConnectWithoutTeamInput = {
+  where: Prisma.PlayerWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlayerCreateWithoutTeamInput, Prisma.PlayerUncheckedCreateWithoutTeamInput>
+}
+
+export type PlayerCreateManyTeamInputEnvelope = {
+  data: Prisma.PlayerCreateManyTeamInput | Prisma.PlayerCreateManyTeamInput[]
+  skipDuplicates?: boolean
+}
+
+export type PlayerUpsertWithWhereUniqueWithoutTeamInput = {
+  where: Prisma.PlayerWhereUniqueInput
+  update: Prisma.XOR<Prisma.PlayerUpdateWithoutTeamInput, Prisma.PlayerUncheckedUpdateWithoutTeamInput>
+  create: Prisma.XOR<Prisma.PlayerCreateWithoutTeamInput, Prisma.PlayerUncheckedCreateWithoutTeamInput>
+}
+
+export type PlayerUpdateWithWhereUniqueWithoutTeamInput = {
+  where: Prisma.PlayerWhereUniqueInput
+  data: Prisma.XOR<Prisma.PlayerUpdateWithoutTeamInput, Prisma.PlayerUncheckedUpdateWithoutTeamInput>
+}
+
+export type PlayerUpdateManyWithWhereWithoutTeamInput = {
+  where: Prisma.PlayerScalarWhereInput
+  data: Prisma.XOR<Prisma.PlayerUpdateManyMutationInput, Prisma.PlayerUncheckedUpdateManyWithoutTeamInput>
+}
+
+export type PlayerScalarWhereInput = {
+  AND?: Prisma.PlayerScalarWhereInput | Prisma.PlayerScalarWhereInput[]
+  OR?: Prisma.PlayerScalarWhereInput[]
+  NOT?: Prisma.PlayerScalarWhereInput | Prisma.PlayerScalarWhereInput[]
+  id?: Prisma.IntFilter<"Player"> | number
+  name?: Prisma.StringNullableFilter<"Player"> | string | null
+  firstname?: Prisma.StringNullableFilter<"Player"> | string | null
+  lastname?: Prisma.StringNullableFilter<"Player"> | string | null
+  age?: Prisma.IntNullableFilter<"Player"> | number | null
+  nationality?: Prisma.StringNullableFilter<"Player"> | string | null
+  height?: Prisma.IntNullableFilter<"Player"> | number | null
+  weight?: Prisma.IntNullableFilter<"Player"> | number | null
+  jerseyNumber?: Prisma.IntNullableFilter<"Player"> | number | null
+  position?: Prisma.StringNullableFilter<"Player"> | string | null
+  photo?: Prisma.StringNullableFilter<"Player"> | string | null
+  overall?: Prisma.IntNullableFilter<"Player"> | number | null
+  teamId?: Prisma.IntNullableFilter<"Player"> | number | null
+}
+
+export type PlayerCreateWithoutSavePlayersInput = {
+  name?: string | null
+  firstname?: string | null
+  lastname?: string | null
+  age?: number | null
+  nationality?: string | null
+  height?: number | null
+  weight?: number | null
+  jerseyNumber?: number | null
+  position?: string | null
+  photo?: string | null
+  overall?: number | null
+  team?: Prisma.TeamCreateNestedOneWithoutPlayersInput
+}
+
+export type PlayerUncheckedCreateWithoutSavePlayersInput = {
+  id?: number
+  name?: string | null
+  firstname?: string | null
+  lastname?: string | null
+  age?: number | null
+  nationality?: string | null
+  height?: number | null
+  weight?: number | null
+  jerseyNumber?: number | null
+  position?: string | null
+  photo?: string | null
+  overall?: number | null
+  teamId?: number | null
+}
+
+export type PlayerCreateOrConnectWithoutSavePlayersInput = {
+  where: Prisma.PlayerWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlayerCreateWithoutSavePlayersInput, Prisma.PlayerUncheckedCreateWithoutSavePlayersInput>
+}
+
+export type PlayerUpsertWithoutSavePlayersInput = {
+  update: Prisma.XOR<Prisma.PlayerUpdateWithoutSavePlayersInput, Prisma.PlayerUncheckedUpdateWithoutSavePlayersInput>
+  create: Prisma.XOR<Prisma.PlayerCreateWithoutSavePlayersInput, Prisma.PlayerUncheckedCreateWithoutSavePlayersInput>
+  where?: Prisma.PlayerWhereInput
+}
+
+export type PlayerUpdateToOneWithWhereWithoutSavePlayersInput = {
+  where?: Prisma.PlayerWhereInput
+  data: Prisma.XOR<Prisma.PlayerUpdateWithoutSavePlayersInput, Prisma.PlayerUncheckedUpdateWithoutSavePlayersInput>
+}
+
+export type PlayerUpdateWithoutSavePlayersInput = {
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  height?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  weight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  jerseyNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  overall?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  team?: Prisma.TeamUpdateOneWithoutPlayersNestedInput
+}
+
+export type PlayerUncheckedUpdateWithoutSavePlayersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  height?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  weight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  jerseyNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  overall?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type PlayerCreateManyTeamInput = {
+  id?: number
+  name?: string | null
+  firstname?: string | null
+  lastname?: string | null
+  age?: number | null
+  nationality?: string | null
+  height?: number | null
+  weight?: number | null
+  jerseyNumber?: number | null
+  position?: string | null
+  photo?: string | null
+  overall?: number | null
+}
+
+export type PlayerUpdateWithoutTeamInput = {
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  height?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  weight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  jerseyNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  overall?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  savePlayers?: Prisma.SavePlayerUpdateManyWithoutOriginalPlayerNestedInput
+}
+
+export type PlayerUncheckedUpdateWithoutTeamInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  height?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  weight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  jerseyNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  overall?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  savePlayers?: Prisma.SavePlayerUncheckedUpdateManyWithoutOriginalPlayerNestedInput
+}
+
+export type PlayerUncheckedUpdateManyWithoutTeamInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  height?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  weight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  jerseyNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  overall?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+
+/**
+ * Count Type PlayerCountOutputType
+ */
+
+export type PlayerCountOutputType = {
+  savePlayers: number
+}
+
+export type PlayerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  savePlayers?: boolean | PlayerCountOutputTypeCountSavePlayersArgs
+}
+
+/**
+ * PlayerCountOutputType without action
+ */
+export type PlayerCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlayerCountOutputType
+   */
+  select?: Prisma.PlayerCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PlayerCountOutputType without action
+ */
+export type PlayerCountOutputTypeCountSavePlayersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SavePlayerWhereInput
+}
 
 
 export type PlayerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -516,6 +896,11 @@ export type PlayerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   jerseyNumber?: boolean
   position?: boolean
   photo?: boolean
+  overall?: boolean
+  teamId?: boolean
+  team?: boolean | Prisma.Player$teamArgs<ExtArgs>
+  savePlayers?: boolean | Prisma.Player$savePlayersArgs<ExtArgs>
+  _count?: boolean | Prisma.PlayerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["player"]>
 
 export type PlayerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -530,6 +915,9 @@ export type PlayerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   jerseyNumber?: boolean
   position?: boolean
   photo?: boolean
+  overall?: boolean
+  teamId?: boolean
+  team?: boolean | Prisma.Player$teamArgs<ExtArgs>
 }, ExtArgs["result"]["player"]>
 
 export type PlayerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -544,6 +932,9 @@ export type PlayerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   jerseyNumber?: boolean
   position?: boolean
   photo?: boolean
+  overall?: boolean
+  teamId?: boolean
+  team?: boolean | Prisma.Player$teamArgs<ExtArgs>
 }, ExtArgs["result"]["player"]>
 
 export type PlayerSelectScalar = {
@@ -558,13 +949,29 @@ export type PlayerSelectScalar = {
   jerseyNumber?: boolean
   position?: boolean
   photo?: boolean
+  overall?: boolean
+  teamId?: boolean
 }
 
-export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "firstname" | "lastname" | "age" | "nationality" | "height" | "weight" | "jerseyNumber" | "position" | "photo", ExtArgs["result"]["player"]>
+export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "firstname" | "lastname" | "age" | "nationality" | "height" | "weight" | "jerseyNumber" | "position" | "photo" | "overall" | "teamId", ExtArgs["result"]["player"]>
+export type PlayerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  team?: boolean | Prisma.Player$teamArgs<ExtArgs>
+  savePlayers?: boolean | Prisma.Player$savePlayersArgs<ExtArgs>
+  _count?: boolean | Prisma.PlayerCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type PlayerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  team?: boolean | Prisma.Player$teamArgs<ExtArgs>
+}
+export type PlayerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  team?: boolean | Prisma.Player$teamArgs<ExtArgs>
+}
 
 export type $PlayerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Player"
-  objects: {}
+  objects: {
+    team: Prisma.$TeamPayload<ExtArgs> | null
+    savePlayers: Prisma.$SavePlayerPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string | null
@@ -577,6 +984,8 @@ export type $PlayerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     jerseyNumber: number | null
     position: string | null
     photo: string | null
+    overall: number | null
+    teamId: number | null
   }, ExtArgs["result"]["player"]>
   composites: {}
 }
@@ -971,6 +1380,8 @@ readonly fields: PlayerFieldRefs;
  */
 export interface Prisma__PlayerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  team<T extends Prisma.Player$teamArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Player$teamArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  savePlayers<T extends Prisma.Player$savePlayersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Player$savePlayersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SavePlayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1011,6 +1422,8 @@ export interface PlayerFieldRefs {
   readonly jerseyNumber: Prisma.FieldRef<"Player", 'Int'>
   readonly position: Prisma.FieldRef<"Player", 'String'>
   readonly photo: Prisma.FieldRef<"Player", 'String'>
+  readonly overall: Prisma.FieldRef<"Player", 'Int'>
+  readonly teamId: Prisma.FieldRef<"Player", 'Int'>
 }
     
 
@@ -1027,6 +1440,10 @@ export type PlayerFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Player
    */
   omit?: Prisma.PlayerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
   /**
    * Filter, which Player to fetch.
    */
@@ -1046,6 +1463,10 @@ export type PlayerFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.PlayerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
+  /**
    * Filter, which Player to fetch.
    */
   where: Prisma.PlayerWhereUniqueInput
@@ -1063,6 +1484,10 @@ export type PlayerFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Player
    */
   omit?: Prisma.PlayerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
   /**
    * Filter, which Player to fetch.
    */
@@ -1112,6 +1537,10 @@ export type PlayerFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.PlayerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
+  /**
    * Filter, which Player to fetch.
    */
   where?: Prisma.PlayerWhereInput
@@ -1160,6 +1589,10 @@ export type PlayerFindManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.PlayerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
+  /**
    * Filter, which Players to fetch.
    */
   where?: Prisma.PlayerWhereInput
@@ -1203,6 +1636,10 @@ export type PlayerCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   omit?: Prisma.PlayerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
+  /**
    * The data needed to create a Player.
    */
   data?: Prisma.XOR<Prisma.PlayerCreateInput, Prisma.PlayerUncheckedCreateInput>
@@ -1236,6 +1673,10 @@ export type PlayerCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    */
   data: Prisma.PlayerCreateManyInput | Prisma.PlayerCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1250,6 +1691,10 @@ export type PlayerUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Player
    */
   omit?: Prisma.PlayerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
   /**
    * The data needed to update a Player.
    */
@@ -1302,6 +1747,10 @@ export type PlayerUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many Players to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1316,6 +1765,10 @@ export type PlayerUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Player
    */
   omit?: Prisma.PlayerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
   /**
    * The filter to search for the Player to update in case it exists.
    */
@@ -1343,6 +1796,10 @@ export type PlayerDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   omit?: Prisma.PlayerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
+  /**
    * Filter which Player to delete.
    */
   where: Prisma.PlayerWhereUniqueInput
@@ -1363,6 +1820,49 @@ export type PlayerDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
+ * Player.team
+ */
+export type Player$teamArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Team
+   */
+  select?: Prisma.TeamSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Team
+   */
+  omit?: Prisma.TeamOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamInclude<ExtArgs> | null
+  where?: Prisma.TeamWhereInput
+}
+
+/**
+ * Player.savePlayers
+ */
+export type Player$savePlayersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SavePlayer
+   */
+  select?: Prisma.SavePlayerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SavePlayer
+   */
+  omit?: Prisma.SavePlayerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SavePlayerInclude<ExtArgs> | null
+  where?: Prisma.SavePlayerWhereInput
+  orderBy?: Prisma.SavePlayerOrderByWithRelationInput | Prisma.SavePlayerOrderByWithRelationInput[]
+  cursor?: Prisma.SavePlayerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SavePlayerScalarFieldEnum | Prisma.SavePlayerScalarFieldEnum[]
+}
+
+/**
  * Player without action
  */
 export type PlayerDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1374,4 +1874,8 @@ export type PlayerDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Player
    */
   omit?: Prisma.PlayerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayerInclude<ExtArgs> | null
 }

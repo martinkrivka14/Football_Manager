@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import prisma from "../../../lib/db";
 
 export async function updatePlayersStats() {
-  // 1. Změna: Načteme rovnou všechny týmy I S JEJICH HRÁČI
+  
   const allTeams = await prisma.team.findMany({
     include: { players: true }
   });
@@ -14,9 +14,9 @@ export async function updatePlayersStats() {
   let updatedCount = 0;
 
   for (const team of allTeams) {
-    const teamSquad = team.players; // Hráči už jsou v týmu, vezmeme je
+    const teamSquad = team.players; 
     
-    // Projdeme všechny hráče v daném týmu
+    
     for (let i = 0; i < teamSquad.length; i++) {
       const player = teamSquad[i];
       

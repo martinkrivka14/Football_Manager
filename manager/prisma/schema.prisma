@@ -19,7 +19,9 @@ model Team {
   leagueId  Int?
   league    League?  @relation(fields: [leagueId], references: [id])
   venues    Venue?
-  players   Player[] // NOVÉ: Tým má pole (seznam) svých hráčů
+  players   Player[] 
+
+  saveTeams SaveTeam[]
 }
 
 model Venue {
@@ -39,6 +41,8 @@ model League {
   name      String?
   logo      String?
   teams     Team[]
+
+  saveLeagues SaveLeague[]
 }
 
 model Player {
@@ -53,9 +57,128 @@ model Player {
   jerseyNumber  Int?
   position      String?
   photo         String?
-  overall       Int?     // NOVÉ: Celkové hodnocení hráče (0-100)
-  teamId        Int?     // NOVÉ: ID týmu, za který hráč hraje
-  team          Team?    @relation(fields: [teamId], references: [id]) // NOVÉ: Propojení na model Team
+  overall       Int?     
+  teamId        Int?     
+  team          Team?    @relation(fields: [teamId], references: [id])
+
+  savePlayers SavePlayer[]
+}
+
+
+
+model GameSave {
+  id          String   @id @default(cuid()) 
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  saveName    String   
+  inGameDate  DateTime @default(now()) 
+  
+  
+  userTeamId  String?
+  userTeam    SaveTeam? @relation("ManagedTeam", fields: [userTeamId], references: [id], onDelete: SetNull)
+
+  
+  leagues     SaveLeague[]
+  teams       SaveTeam[]
+  players     SavePlayer[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  saveLineups SaveLineup[]
+}
+
+model SaveTeam {
+  id              String    @id @default(cuid())
+  
+  gameSaveId      String
+  gameSave        GameSave  @relation(fields: [gameSaveId], references: [id], onDelete: Cascade)
+  
+  
+  originalTeamId  Int
+  originalTeam    Team      @relation(fields: [originalTeamId], references: [id]) 
+  
+  
+  budget          Int       @default(0) 
+
+  saveLeagueId    String?
+  saveLeague      SaveLeague? @relation(fields: [saveLeagueId], references: [id], onDelete: SetNull)
+  
+  players         SavePlayer[] @relation("SaveTeamPlayers")
+  managedBy       GameSave[]   @relation("ManagedTeam")
+
+
+  saveLineups SaveLineup[]
+}
+
+model SavePlayer {
+  id                String    @id @default(cuid())
+  gameSaveId        String
+  gameSave          GameSave  @relation(fields: [gameSaveId], references: [id], onDelete: Cascade)
+  originalPlayerId  Int
+  originalPlayer    Player    @relation(fields: [originalPlayerId], references: [id]) 
+  
+  overall           Int?      
+  age               Int?      
+  saveTeamId        String?
+  saveTeam          SaveTeam? @relation("SaveTeamPlayers", fields: [saveTeamId], references: [id], onDelete: SetNull)
+
+  condition         Int       @default(100)       
+  morale            String    @default("NORMAL")  
+
+  lineupEntries     SaveLineupEntry[]
+}
+
+
+model SaveLineup {
+  id          String   @id @default(cuid())
+  name        String   @default("Základní Sestava")
+  
+  gameSaveId  String
+  gameSave    GameSave @relation(fields: [gameSaveId], references: [id], onDelete: Cascade)
+  
+  saveTeamId  String
+  saveTeam    SaveTeam @relation(fields: [saveTeamId], references: [id], onDelete: Cascade)
+
+
+  entries     SaveLineupEntry[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+model SaveLineupEntry {
+  id              String      @id @default(cuid())
+  
+  saveLineupId    String
+  saveLineup      SaveLineup  @relation(fields: [saveLineupId], references: [id], onDelete: Cascade)
+  
+  savePlayerId    String
+  savePlayer      SavePlayer  @relation(fields: [savePlayerId], references: [id], onDelete: Cascade)
+
+  
+  role            String      
+  
+  
+  pitchPosition   String?     
+
+  @@unique([saveLineupId, savePlayerId])
+}
+
+model SaveLeague {
+  id               String     @id @default(cuid())
+  
+  gameSaveId       String
+  gameSave         GameSave   @relation(fields: [gameSaveId], references: [id], onDelete: Cascade)
+  
+  
+  originalLeagueId Int
+  originalLeague   League     @relation(fields: [originalLeagueId], references: [id])
+  
+
+  saveTeams SaveTeam[]
 }
 
 
@@ -69,11 +192,12 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  // Optional for WebAuthn support
   Authenticator Authenticator[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  gameSaves GameSave[]
 }
  
 model Account {

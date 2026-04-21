@@ -19,9 +19,7 @@ export default function Home() {
       <Info name={"Football Manager"} info={"Welcome to the Football Manager game!"}/>
       <div className="flex justify-center absolute mt-50">
         <Link href="/play"> <PlayButton/> </Link>
-        
       </div>
-
       <Footer/>
 
 

@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.3.0
- * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
+ * Prisma Client JS version: 7.4.2
+ * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.3.0",
-  engine: "9d6ad21cbbceab97458517b147a6a09ff43aa735"
+  client: "7.4.2",
+  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
 }
 
 /**
@@ -388,10 +388,17 @@ export const ModelName = {
   Venue: 'Venue',
   League: 'League',
   Player: 'Player',
+  GameSave: 'GameSave',
+  SaveTeam: 'SaveTeam',
+  SavePlayer: 'SavePlayer',
+  SaveLineup: 'SaveLineup',
+  SaveLineupEntry: 'SaveLineupEntry',
+  SaveLeague: 'SaveLeague',
+  User: 'User',
   Account: 'Account',
   Session: 'Session',
-  User: 'User',
-  VerificationRequest: 'VerificationRequest'
+  VerificationToken: 'VerificationToken',
+  Authenticator: 'Authenticator'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "team" | "venue" | "league" | "player" | "account" | "session" | "user" | "verificationRequest"
+    modelProps: "team" | "venue" | "league" | "player" | "gameSave" | "saveTeam" | "savePlayer" | "saveLineup" | "saveLineupEntry" | "saveLeague" | "user" | "account" | "session" | "verificationToken" | "authenticator"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -707,6 +714,524 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    GameSave: {
+      payload: Prisma.$GameSavePayload<ExtArgs>
+      fields: Prisma.GameSaveFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GameSaveFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GameSaveFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload>
+        }
+        findFirst: {
+          args: Prisma.GameSaveFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GameSaveFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload>
+        }
+        findMany: {
+          args: Prisma.GameSaveFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload>[]
+        }
+        create: {
+          args: Prisma.GameSaveCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload>
+        }
+        createMany: {
+          args: Prisma.GameSaveCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GameSaveCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload>[]
+        }
+        delete: {
+          args: Prisma.GameSaveDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload>
+        }
+        update: {
+          args: Prisma.GameSaveUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload>
+        }
+        deleteMany: {
+          args: Prisma.GameSaveDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GameSaveUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GameSaveUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload>[]
+        }
+        upsert: {
+          args: Prisma.GameSaveUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GameSavePayload>
+        }
+        aggregate: {
+          args: Prisma.GameSaveAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGameSave>
+        }
+        groupBy: {
+          args: Prisma.GameSaveGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GameSaveGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GameSaveCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GameSaveCountAggregateOutputType> | number
+        }
+      }
+    }
+    SaveTeam: {
+      payload: Prisma.$SaveTeamPayload<ExtArgs>
+      fields: Prisma.SaveTeamFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SaveTeamFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SaveTeamFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload>
+        }
+        findFirst: {
+          args: Prisma.SaveTeamFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SaveTeamFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload>
+        }
+        findMany: {
+          args: Prisma.SaveTeamFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload>[]
+        }
+        create: {
+          args: Prisma.SaveTeamCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload>
+        }
+        createMany: {
+          args: Prisma.SaveTeamCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SaveTeamCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload>[]
+        }
+        delete: {
+          args: Prisma.SaveTeamDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload>
+        }
+        update: {
+          args: Prisma.SaveTeamUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload>
+        }
+        deleteMany: {
+          args: Prisma.SaveTeamDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SaveTeamUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SaveTeamUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload>[]
+        }
+        upsert: {
+          args: Prisma.SaveTeamUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveTeamPayload>
+        }
+        aggregate: {
+          args: Prisma.SaveTeamAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSaveTeam>
+        }
+        groupBy: {
+          args: Prisma.SaveTeamGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaveTeamGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SaveTeamCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaveTeamCountAggregateOutputType> | number
+        }
+      }
+    }
+    SavePlayer: {
+      payload: Prisma.$SavePlayerPayload<ExtArgs>
+      fields: Prisma.SavePlayerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SavePlayerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SavePlayerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload>
+        }
+        findFirst: {
+          args: Prisma.SavePlayerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SavePlayerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload>
+        }
+        findMany: {
+          args: Prisma.SavePlayerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload>[]
+        }
+        create: {
+          args: Prisma.SavePlayerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload>
+        }
+        createMany: {
+          args: Prisma.SavePlayerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SavePlayerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload>[]
+        }
+        delete: {
+          args: Prisma.SavePlayerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload>
+        }
+        update: {
+          args: Prisma.SavePlayerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload>
+        }
+        deleteMany: {
+          args: Prisma.SavePlayerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SavePlayerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SavePlayerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload>[]
+        }
+        upsert: {
+          args: Prisma.SavePlayerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavePlayerPayload>
+        }
+        aggregate: {
+          args: Prisma.SavePlayerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSavePlayer>
+        }
+        groupBy: {
+          args: Prisma.SavePlayerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SavePlayerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SavePlayerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SavePlayerCountAggregateOutputType> | number
+        }
+      }
+    }
+    SaveLineup: {
+      payload: Prisma.$SaveLineupPayload<ExtArgs>
+      fields: Prisma.SaveLineupFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SaveLineupFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SaveLineupFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload>
+        }
+        findFirst: {
+          args: Prisma.SaveLineupFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SaveLineupFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload>
+        }
+        findMany: {
+          args: Prisma.SaveLineupFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload>[]
+        }
+        create: {
+          args: Prisma.SaveLineupCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload>
+        }
+        createMany: {
+          args: Prisma.SaveLineupCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SaveLineupCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload>[]
+        }
+        delete: {
+          args: Prisma.SaveLineupDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload>
+        }
+        update: {
+          args: Prisma.SaveLineupUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload>
+        }
+        deleteMany: {
+          args: Prisma.SaveLineupDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SaveLineupUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SaveLineupUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload>[]
+        }
+        upsert: {
+          args: Prisma.SaveLineupUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupPayload>
+        }
+        aggregate: {
+          args: Prisma.SaveLineupAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSaveLineup>
+        }
+        groupBy: {
+          args: Prisma.SaveLineupGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaveLineupGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SaveLineupCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaveLineupCountAggregateOutputType> | number
+        }
+      }
+    }
+    SaveLineupEntry: {
+      payload: Prisma.$SaveLineupEntryPayload<ExtArgs>
+      fields: Prisma.SaveLineupEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SaveLineupEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SaveLineupEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.SaveLineupEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SaveLineupEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload>
+        }
+        findMany: {
+          args: Prisma.SaveLineupEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload>[]
+        }
+        create: {
+          args: Prisma.SaveLineupEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload>
+        }
+        createMany: {
+          args: Prisma.SaveLineupEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SaveLineupEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.SaveLineupEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload>
+        }
+        update: {
+          args: Prisma.SaveLineupEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.SaveLineupEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SaveLineupEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SaveLineupEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.SaveLineupEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLineupEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.SaveLineupEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSaveLineupEntry>
+        }
+        groupBy: {
+          args: Prisma.SaveLineupEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaveLineupEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SaveLineupEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaveLineupEntryCountAggregateOutputType> | number
+        }
+      }
+    }
+    SaveLeague: {
+      payload: Prisma.$SaveLeaguePayload<ExtArgs>
+      fields: Prisma.SaveLeagueFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SaveLeagueFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SaveLeagueFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload>
+        }
+        findFirst: {
+          args: Prisma.SaveLeagueFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SaveLeagueFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload>
+        }
+        findMany: {
+          args: Prisma.SaveLeagueFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload>[]
+        }
+        create: {
+          args: Prisma.SaveLeagueCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload>
+        }
+        createMany: {
+          args: Prisma.SaveLeagueCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SaveLeagueCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload>[]
+        }
+        delete: {
+          args: Prisma.SaveLeagueDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload>
+        }
+        update: {
+          args: Prisma.SaveLeagueUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload>
+        }
+        deleteMany: {
+          args: Prisma.SaveLeagueDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SaveLeagueUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SaveLeagueUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload>[]
+        }
+        upsert: {
+          args: Prisma.SaveLeagueUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaveLeaguePayload>
+        }
+        aggregate: {
+          args: Prisma.SaveLeagueAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSaveLeague>
+        }
+        groupBy: {
+          args: Prisma.SaveLeagueGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaveLeagueGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SaveLeagueCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaveLeagueCountAggregateOutputType> | number
+        }
+      }
+    }
+    User: {
+      payload: Prisma.$UserPayload<ExtArgs>
+      fields: Prisma.UserFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        findFirst: {
+          args: Prisma.UserFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        findMany: {
+          args: Prisma.UserFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        create: {
+          args: Prisma.UserCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        createMany: {
+          args: Prisma.UserCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        delete: {
+          args: Prisma.UserDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        update: {
+          args: Prisma.UserUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        aggregate: {
+          args: Prisma.UserAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUser>
+        }
+        groupBy: {
+          args: Prisma.UserGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
     Account: {
       payload: Prisma.$AccountPayload<ExtArgs>
       fields: Prisma.AccountFieldRefs
@@ -855,151 +1380,151 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    User: {
-      payload: Prisma.$UserPayload<ExtArgs>
-      fields: Prisma.UserFieldRefs
+    VerificationToken: {
+      payload: Prisma.$VerificationTokenPayload<ExtArgs>
+      fields: Prisma.VerificationTokenFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.UserFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
+          args: Prisma.VerificationTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+          args: Prisma.VerificationTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
         }
         findFirst: {
-          args: Prisma.UserFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
+          args: Prisma.VerificationTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+          args: Prisma.VerificationTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
         }
         findMany: {
-          args: Prisma.UserFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+          args: Prisma.VerificationTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>[]
         }
         create: {
-          args: Prisma.UserCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+          args: Prisma.VerificationTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
         }
         createMany: {
-          args: Prisma.UserCreateManyArgs<ExtArgs>
+          args: Prisma.VerificationTokenCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+          args: Prisma.VerificationTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>[]
         }
         delete: {
-          args: Prisma.UserDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+          args: Prisma.VerificationTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
         }
         update: {
-          args: Prisma.UserUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+          args: Prisma.VerificationTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
         }
         deleteMany: {
-          args: Prisma.UserDeleteManyArgs<ExtArgs>
+          args: Prisma.VerificationTokenDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.UserUpdateManyArgs<ExtArgs>
+          args: Prisma.VerificationTokenUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+          args: Prisma.VerificationTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>[]
         }
         upsert: {
-          args: Prisma.UserUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+          args: Prisma.VerificationTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationTokenPayload>
         }
         aggregate: {
-          args: Prisma.UserAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateUser>
+          args: Prisma.VerificationTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVerificationToken>
         }
         groupBy: {
-          args: Prisma.UserGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserGroupByOutputType>[]
+          args: Prisma.VerificationTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VerificationTokenGroupByOutputType>[]
         }
         count: {
-          args: Prisma.UserCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+          args: Prisma.VerificationTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VerificationTokenCountAggregateOutputType> | number
         }
       }
     }
-    VerificationRequest: {
-      payload: Prisma.$VerificationRequestPayload<ExtArgs>
-      fields: Prisma.VerificationRequestFieldRefs
+    Authenticator: {
+      payload: Prisma.$AuthenticatorPayload<ExtArgs>
+      fields: Prisma.AuthenticatorFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.VerificationRequestFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload> | null
+          args: Prisma.AuthenticatorFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.VerificationRequestFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload>
+          args: Prisma.AuthenticatorFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload>
         }
         findFirst: {
-          args: Prisma.VerificationRequestFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload> | null
+          args: Prisma.AuthenticatorFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.VerificationRequestFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload>
+          args: Prisma.AuthenticatorFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload>
         }
         findMany: {
-          args: Prisma.VerificationRequestFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload>[]
+          args: Prisma.AuthenticatorFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload>[]
         }
         create: {
-          args: Prisma.VerificationRequestCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload>
+          args: Prisma.AuthenticatorCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload>
         }
         createMany: {
-          args: Prisma.VerificationRequestCreateManyArgs<ExtArgs>
+          args: Prisma.AuthenticatorCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.VerificationRequestCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload>[]
+          args: Prisma.AuthenticatorCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload>[]
         }
         delete: {
-          args: Prisma.VerificationRequestDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload>
+          args: Prisma.AuthenticatorDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload>
         }
         update: {
-          args: Prisma.VerificationRequestUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload>
+          args: Prisma.AuthenticatorUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload>
         }
         deleteMany: {
-          args: Prisma.VerificationRequestDeleteManyArgs<ExtArgs>
+          args: Prisma.AuthenticatorDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.VerificationRequestUpdateManyArgs<ExtArgs>
+          args: Prisma.AuthenticatorUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.VerificationRequestUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload>[]
+          args: Prisma.AuthenticatorUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload>[]
         }
         upsert: {
-          args: Prisma.VerificationRequestUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationRequestPayload>
+          args: Prisma.AuthenticatorUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthenticatorPayload>
         }
         aggregate: {
-          args: Prisma.VerificationRequestAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateVerificationRequest>
+          args: Prisma.AuthenticatorAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAuthenticator>
         }
         groupBy: {
-          args: Prisma.VerificationRequestGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VerificationRequestGroupByOutputType>[]
+          args: Prisma.AuthenticatorGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthenticatorGroupByOutputType>[]
         }
         count: {
-          args: Prisma.VerificationRequestCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VerificationRequestCountAggregateOutputType> | number
+          args: Prisma.AuthenticatorCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthenticatorCountAggregateOutputType> | number
         }
       }
     }
@@ -1090,39 +1615,82 @@ export const PlayerScalarFieldEnum = {
   weight: 'weight',
   jerseyNumber: 'jerseyNumber',
   position: 'position',
-  photo: 'photo'
+  photo: 'photo',
+  overall: 'overall',
+  teamId: 'teamId'
 } as const
 
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
 
 
-export const AccountScalarFieldEnum = {
+export const GameSaveScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  providerType: 'providerType',
-  providerId: 'providerId',
-  providerAccountId: 'providerAccountId',
-  refreshToken: 'refreshToken',
-  accessToken: 'accessToken',
-  accessTokenExpires: 'accessTokenExpires',
+  saveName: 'saveName',
+  inGameDate: 'inGameDate',
+  userTeamId: 'userTeamId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+export type GameSaveScalarFieldEnum = (typeof GameSaveScalarFieldEnum)[keyof typeof GameSaveScalarFieldEnum]
 
 
-export const SessionScalarFieldEnum = {
+export const SaveTeamScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  expires: 'expires',
-  sessionToken: 'sessionToken',
-  accessToken: 'accessToken',
+  gameSaveId: 'gameSaveId',
+  originalTeamId: 'originalTeamId',
+  budget: 'budget',
+  saveLeagueId: 'saveLeagueId'
+} as const
+
+export type SaveTeamScalarFieldEnum = (typeof SaveTeamScalarFieldEnum)[keyof typeof SaveTeamScalarFieldEnum]
+
+
+export const SavePlayerScalarFieldEnum = {
+  id: 'id',
+  gameSaveId: 'gameSaveId',
+  originalPlayerId: 'originalPlayerId',
+  overall: 'overall',
+  age: 'age',
+  saveTeamId: 'saveTeamId',
+  condition: 'condition',
+  morale: 'morale'
+} as const
+
+export type SavePlayerScalarFieldEnum = (typeof SavePlayerScalarFieldEnum)[keyof typeof SavePlayerScalarFieldEnum]
+
+
+export const SaveLineupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  gameSaveId: 'gameSaveId',
+  saveTeamId: 'saveTeamId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+export type SaveLineupScalarFieldEnum = (typeof SaveLineupScalarFieldEnum)[keyof typeof SaveLineupScalarFieldEnum]
+
+
+export const SaveLineupEntryScalarFieldEnum = {
+  id: 'id',
+  saveLineupId: 'saveLineupId',
+  savePlayerId: 'savePlayerId',
+  role: 'role',
+  pitchPosition: 'pitchPosition'
+} as const
+
+export type SaveLineupEntryScalarFieldEnum = (typeof SaveLineupEntryScalarFieldEnum)[keyof typeof SaveLineupEntryScalarFieldEnum]
+
+
+export const SaveLeagueScalarFieldEnum = {
+  id: 'id',
+  gameSaveId: 'gameSaveId',
+  originalLeagueId: 'originalLeagueId'
+} as const
+
+export type SaveLeagueScalarFieldEnum = (typeof SaveLeagueScalarFieldEnum)[keyof typeof SaveLeagueScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -1138,16 +1706,57 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const VerificationRequestScalarFieldEnum = {
-  id: 'id',
-  identifier: 'identifier',
-  token: 'token',
+export const AccountScalarFieldEnum = {
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  refresh_token: 'refresh_token',
+  access_token: 'access_token',
+  expires_at: 'expires_at',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  sessionToken: 'sessionToken',
+  userId: 'userId',
   expires: 'expires',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type VerificationRequestScalarFieldEnum = (typeof VerificationRequestScalarFieldEnum)[keyof typeof VerificationRequestScalarFieldEnum]
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const VerificationTokenScalarFieldEnum = {
+  identifier: 'identifier',
+  token: 'token',
+  expires: 'expires'
+} as const
+
+export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+export const AuthenticatorScalarFieldEnum = {
+  credentialID: 'credentialID',
+  userId: 'userId',
+  providerAccountId: 'providerAccountId',
+  credentialPublicKey: 'credentialPublicKey',
+  counter: 'counter',
+  credentialDeviceType: 'credentialDeviceType',
+  credentialBackedUp: 'credentialBackedUp',
+  transports: 'transports'
+} as const
+
+export type AuthenticatorScalarFieldEnum = (typeof AuthenticatorScalarFieldEnum)[keyof typeof AuthenticatorScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1341,10 +1950,17 @@ export type GlobalOmitConfig = {
   venue?: Prisma.VenueOmit
   league?: Prisma.LeagueOmit
   player?: Prisma.PlayerOmit
+  gameSave?: Prisma.GameSaveOmit
+  saveTeam?: Prisma.SaveTeamOmit
+  savePlayer?: Prisma.SavePlayerOmit
+  saveLineup?: Prisma.SaveLineupOmit
+  saveLineupEntry?: Prisma.SaveLineupEntryOmit
+  saveLeague?: Prisma.SaveLeagueOmit
+  user?: Prisma.UserOmit
   account?: Prisma.AccountOmit
   session?: Prisma.SessionOmit
-  user?: Prisma.UserOmit
-  verificationRequest?: Prisma.VerificationRequestOmit
+  verificationToken?: Prisma.VerificationTokenOmit
+  authenticator?: Prisma.AuthenticatorOmit
 }
 
 /* Types for Logging */

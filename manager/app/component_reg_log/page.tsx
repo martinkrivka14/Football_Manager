@@ -13,10 +13,14 @@ export default async function RegLog() {
     console.log(session?.user);
     if(session) {
         return(
-            <><div>You are signed in as {session.user?.name}</div>
-            {session.user?.image && (
-            <Image src={session.user.image} width={50} height={50} alt={session.user?.name ?? "Profile picture"}/>)}
-            <SignOutButton></SignOutButton>
+            <>
+            <div className=" bg-[#24292f] h-screen w-screen flex flex-col items-center justify-center">
+                <div className="text-lg font-medium justify-items-center p-4"><h1 className="bg-[#24292f] text-white p-2 rounded">You are signed in as</h1> <h1 className="text-white">{session.user?.name}</h1></div>
+                {session.user?.image && (
+                <Image src={session.user.image} width={50} height={50} alt={session.user?.name ?? "Profile picture"}/>)}
+                <SignOutButton></SignOutButton>
+                
+            </div>
             </>
             
         );
@@ -24,8 +28,10 @@ export default async function RegLog() {
     return(
 
         <>
-        <div>You are not signed in</div>
+        <div className=" bg-[#24292f] h-screen w-screen flex flex-col items-center justify-center">
+        <div className="text-lg font-medium justify-items-center p-4"><h1 className="bg-[#24292f] text-white p-2 rounded">Welcome you are not signed in</h1></div>
         <SigInButton />
+        </div>
         </>
     );
 

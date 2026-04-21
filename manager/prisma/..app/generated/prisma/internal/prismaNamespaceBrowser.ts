@@ -55,10 +55,17 @@ export const ModelName = {
   Venue: 'Venue',
   League: 'League',
   Player: 'Player',
+  GameSave: 'GameSave',
+  SaveTeam: 'SaveTeam',
+  SavePlayer: 'SavePlayer',
+  SaveLineup: 'SaveLineup',
+  SaveLineupEntry: 'SaveLineupEntry',
+  SaveLeague: 'SaveLeague',
+  User: 'User',
   Account: 'Account',
   Session: 'Session',
-  User: 'User',
-  VerificationRequest: 'VerificationRequest'
+  VerificationToken: 'VerificationToken',
+  Authenticator: 'Authenticator'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -125,39 +132,82 @@ export const PlayerScalarFieldEnum = {
   weight: 'weight',
   jerseyNumber: 'jerseyNumber',
   position: 'position',
-  photo: 'photo'
+  photo: 'photo',
+  overall: 'overall',
+  teamId: 'teamId'
 } as const
 
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
 
 
-export const AccountScalarFieldEnum = {
+export const GameSaveScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  providerType: 'providerType',
-  providerId: 'providerId',
-  providerAccountId: 'providerAccountId',
-  refreshToken: 'refreshToken',
-  accessToken: 'accessToken',
-  accessTokenExpires: 'accessTokenExpires',
+  saveName: 'saveName',
+  inGameDate: 'inGameDate',
+  userTeamId: 'userTeamId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+export type GameSaveScalarFieldEnum = (typeof GameSaveScalarFieldEnum)[keyof typeof GameSaveScalarFieldEnum]
 
 
-export const SessionScalarFieldEnum = {
+export const SaveTeamScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  expires: 'expires',
-  sessionToken: 'sessionToken',
-  accessToken: 'accessToken',
+  gameSaveId: 'gameSaveId',
+  originalTeamId: 'originalTeamId',
+  budget: 'budget',
+  saveLeagueId: 'saveLeagueId'
+} as const
+
+export type SaveTeamScalarFieldEnum = (typeof SaveTeamScalarFieldEnum)[keyof typeof SaveTeamScalarFieldEnum]
+
+
+export const SavePlayerScalarFieldEnum = {
+  id: 'id',
+  gameSaveId: 'gameSaveId',
+  originalPlayerId: 'originalPlayerId',
+  overall: 'overall',
+  age: 'age',
+  saveTeamId: 'saveTeamId',
+  condition: 'condition',
+  morale: 'morale'
+} as const
+
+export type SavePlayerScalarFieldEnum = (typeof SavePlayerScalarFieldEnum)[keyof typeof SavePlayerScalarFieldEnum]
+
+
+export const SaveLineupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  gameSaveId: 'gameSaveId',
+  saveTeamId: 'saveTeamId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+export type SaveLineupScalarFieldEnum = (typeof SaveLineupScalarFieldEnum)[keyof typeof SaveLineupScalarFieldEnum]
+
+
+export const SaveLineupEntryScalarFieldEnum = {
+  id: 'id',
+  saveLineupId: 'saveLineupId',
+  savePlayerId: 'savePlayerId',
+  role: 'role',
+  pitchPosition: 'pitchPosition'
+} as const
+
+export type SaveLineupEntryScalarFieldEnum = (typeof SaveLineupEntryScalarFieldEnum)[keyof typeof SaveLineupEntryScalarFieldEnum]
+
+
+export const SaveLeagueScalarFieldEnum = {
+  id: 'id',
+  gameSaveId: 'gameSaveId',
+  originalLeagueId: 'originalLeagueId'
+} as const
+
+export type SaveLeagueScalarFieldEnum = (typeof SaveLeagueScalarFieldEnum)[keyof typeof SaveLeagueScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -173,16 +223,57 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const VerificationRequestScalarFieldEnum = {
-  id: 'id',
-  identifier: 'identifier',
-  token: 'token',
+export const AccountScalarFieldEnum = {
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  refresh_token: 'refresh_token',
+  access_token: 'access_token',
+  expires_at: 'expires_at',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  sessionToken: 'sessionToken',
+  userId: 'userId',
   expires: 'expires',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type VerificationRequestScalarFieldEnum = (typeof VerificationRequestScalarFieldEnum)[keyof typeof VerificationRequestScalarFieldEnum]
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const VerificationTokenScalarFieldEnum = {
+  identifier: 'identifier',
+  token: 'token',
+  expires: 'expires'
+} as const
+
+export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+export const AuthenticatorScalarFieldEnum = {
+  credentialID: 'credentialID',
+  userId: 'userId',
+  providerAccountId: 'providerAccountId',
+  credentialPublicKey: 'credentialPublicKey',
+  counter: 'counter',
+  credentialDeviceType: 'credentialDeviceType',
+  credentialBackedUp: 'credentialBackedUp',
+  transports: 'transports'
+} as const
+
+export type AuthenticatorScalarFieldEnum = (typeof AuthenticatorScalarFieldEnum)[keyof typeof AuthenticatorScalarFieldEnum]
 
 
 export const SortOrder = {
