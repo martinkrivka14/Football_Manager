@@ -11,7 +11,7 @@ export default async function RegLog() {
 
     const session = await auth();
     console.log(session?.user);
-    if(session) {
+    if(session?.user) {
         return(
             <>
             <div className=" bg-[#24292f] h-screen w-screen flex flex-col items-center justify-center">
@@ -19,7 +19,6 @@ export default async function RegLog() {
                 {session.user?.image && (
                 <Image src={session.user.image} width={50} height={50} alt={session.user?.name ?? "Profile picture"}/>)}
                 <SignOutButton></SignOutButton>
-                
             </div>
             </>
             
