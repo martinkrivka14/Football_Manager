@@ -6,8 +6,8 @@ import {
   dropTargetForElements, 
   monitorForElements 
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { saveLineup } from "../../../action/carrer"; 
-
+import { saveLineup } from "../../../action/carrer";
+import Link from "next/link"; 
 
 export type PlayerData = {
   id: string;
@@ -34,46 +34,27 @@ const formation433: Record<string, { top: string, left: string }> = {
 };
 
 
-const PitchSlot = ({ 
-  positionKey, 
-  positionData, 
-  children 
-}: { 
-  positionKey: string, 
-  positionData: { top: string, left: string }, 
-  children?: React.ReactNode 
-}) => {
+const PitchSlot = ({ positionKey, positionData, children }: { positionKey: string, positionData: { top: string, left: string }, children?: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
-
-  
   useEffect(() => {
     if (!ref.current) return;
-    const cleanup = dropTargetForElements({
+    return dropTargetForElements({
       element: ref.current,
       getData: () => ({ location: 'pitch_slot', pitchPosition: positionKey }),
     });
-    return cleanup;
   }, [positionKey]);
 
   return (
     <div 
       ref={ref}
-      style={{ 
-        position: 'absolute', 
-        top: positionData.top, 
-        left: positionData.left, 
-        transform: 'translate(-50%, -50%)' 
-      }}
+      style={{ position: 'absolute', top: positionData.top, left: positionData.left, transform: 'translate(-50%, -50%)' }}
       className="w-20 h-24 border-2 border-dashed border-white/20 hover:border-white/50 rounded-lg flex items-center justify-center bg-black/10 transition-colors z-10"
     >
-      {!children && (
-        <span className="text-white/30 font-bold text-sm pointer-events-none">{positionKey}</span>
-      )}
+      {!children && <span className="text-white/30 font-bold text-sm pointer-events-none">{positionKey}</span>}
       {children}
     </div>
   );
 };
-
 
 const PlayerCard = ({ player, isField = false }: { player: PlayerData, isField?: boolean }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -82,19 +63,12 @@ const PlayerCard = ({ player, isField = false }: { player: PlayerData, isField?:
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
-    const cleanup = draggable({
+    return draggable({
       element: el,
-      getInitialData: () => ({ 
-        id: player.id, 
-        squadRole: player.squadRole, 
-        pitchPosition: player.pitchPosition 
-      }),
+      getInitialData: () => ({ id: player.id, squadRole: player.squadRole, pitchPosition: player.pitchPosition }),
       onDragStart: () => setIsDragging(true),
       onDrop: () => setIsDragging(false),
     });
-
-    return cleanup;
   }, [player]);
 
   return (
@@ -113,18 +87,11 @@ const PlayerCard = ({ player, isField = false }: { player: PlayerData, isField?:
           {isField ? (player.pitchPosition || player.position) : player.position}
         </span>
       </div>
-      
       <span className={`font-semibold text-white ${isField ? 'text-xs text-center truncate w-full px-1' : 'text-sm'}`}>
         {player.name}
       </span>
     </div>
   );
-};
-
-type PlayerUpdateData = {
-  id: string;
-  squadRole: string;
-  pitchPosition: string | null;
 };
 
 
@@ -142,15 +109,21 @@ export default function TeamManagementClient({
 
   const benchRef = useRef<HTMLDivElement>(null);
 
+
+  const startingXI = players.filter(p => p.squadRole === "STARTING");
+  const benchAndReserves = players.filter(p => p.squadRole !== "STARTING");
+  
+  const teamOverall = startingXI.length > 0 
+    ? Math.round(startingXI.reduce((acc, p) => acc + p.overall, 0) / startingXI.length) 
+    : 0;
+
   useEffect(() => {
     if (!benchRef.current) return;
 
-  
     const dropBench = dropTargetForElements({
       element: benchRef.current,
       getData: () => ({ location: 'bench' }),
     });
-
 
     const monitor = monitorForElements({
       onDrop({ source, location }) {
@@ -164,14 +137,12 @@ export default function TeamManagementClient({
           const draggedPlayer = prevPlayers.find(p => p.id === playerId);
           if (!draggedPlayer) return prevPlayers;
 
-   
           const targetPitchPosition = destination.data.pitchPosition as string | undefined;
           const playerAlreadyInSlot = targetPitchPosition 
             ? prevPlayers.find(p => p.pitchPosition === targetPitchPosition && p.id !== playerId)
             : undefined;
 
           return prevPlayers.map((p) => {
-           
             if (p.id === playerId) {
               if (targetLocation === 'pitch_slot' && targetPitchPosition) {
                 return { ...p, squadRole: 'STARTING', pitchPosition: targetPitchPosition }; 
@@ -180,17 +151,13 @@ export default function TeamManagementClient({
               }
             }
 
-            
             if (playerAlreadyInSlot && p.id === playerAlreadyInSlot.id) {
               if (draggedPlayer.squadRole === 'STARTING') {
-                
                 return { ...p, pitchPosition: draggedPlayer.pitchPosition };
               } else {
-               
                 return { ...p, squadRole: 'BENCH', pitchPosition: null };
               }
             }
-
             return p;
           });
         });
@@ -211,7 +178,8 @@ export default function TeamManagementClient({
       pitchPosition: p.pitchPosition,
     }));
 
-    const result = await saveLineup(saveId, teamId, updates);
+   
+    const result = await saveLineup(saveId, teamId, updates, teamOverall);
     
     setIsSaving(false);
     if (result.success) {
@@ -221,66 +189,88 @@ export default function TeamManagementClient({
     }
   };
 
-  const startingXI = players.filter(p => p.squadRole === "STARTING");
-  const benchAndReserves = players.filter(p => p.squadRole !== "STARTING");
-
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-white">Nastavení formace</h2>
-        <button 
-          onClick={handleSave}
-          disabled={isSaving}
-          className="bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-        >
-          {isSaving ? "Ukládám..." : "Uložit sestavu"}
-        </button>
-      </div>
+    <div className="flex h-screen w-full bg-black text-white font-sans overflow-hidden">
 
-      <div className="flex flex-col lg:flex-row gap-6 h-[70vh] select-none">
-        
-        
-        <div className="flex-1 bg-green-800/90 rounded-xl relative border-4 border-slate-700 overflow-hidden min-h-[500px]">
-         
-          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-white/20 transform -translate-y-1/2 pointer-events-none"></div>
-          <div className="absolute top-1/2 left-1/2 w-32 h-32 border-[2px] border-white/20 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-          <div className="absolute top-0 left-1/2 w-48 h-24 border-b-[2px] border-l-[2px] border-r-[2px] border-white/20 transform -translate-x-1/2 pointer-events-none"></div>
-          <div className="absolute bottom-0 left-1/2 w-48 h-24 border-t-[2px] border-l-[2px] border-r-[2px] border-white/20 transform -translate-x-1/2 pointer-events-none"></div>
-          
-          {Object.entries(formation433).map(([posKey, posData]) => {
-            const playerInThisPosition = startingXI.find(p => p.pitchPosition === posKey);
+      <nav className="w-64 bg-[#0a111a] border-r border-[#1a2533] p-6 flex flex-col gap-6 flex-shrink-0">
+        <h1 className="text-xl font-bold text-sky-400 mb-2">Menu</h1>
+        <ul className="flex flex-col gap-4 text-slate-300">
+          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/home">Home</Link></li>
+          <li className="text-white font-semibold cursor-pointer"><Link href="/game/page/team">Team</Link></li>
+          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/training">Training</Link></li>
+          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/league">League</Link></li>
+          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/schedule">Schedule</Link></li>
+          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/players">Players</Link></li>
+          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/club">Club</Link></li>
+          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/transfers">Transfers</Link></li>
+          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/academy">Academy</Link></li>
+        </ul>
+      </nav>
 
-            return (
-              <PitchSlot key={posKey} positionKey={posKey} positionData={posData}>
-                {playerInThisPosition && (
-                  <PlayerCard player={playerInThisPosition} isField={true} />
-                )}
-              </PitchSlot>
-            );
-          })}
-        </div>
-
-      
-        <div 
-          ref={benchRef} 
-          className="w-full lg:w-96 bg-slate-900 rounded-xl p-4 border border-slate-700 overflow-y-auto"
-        >
-          <h2 className="text-xl font-bold text-sky-400 mb-4 sticky top-0 bg-slate-900 pb-2 border-b border-slate-800 z-10">
-            Náhradníci
-          </h2>
-          
-          <div className="flex flex-col min-h-[100px]">
-            {benchAndReserves.length === 0 ? (
-              <p className="text-slate-500 text-sm text-center mt-4 pointer-events-none">Lavička je prázdná</p>
-            ) : (
-              benchAndReserves.map(player => (
-                 <PlayerCard key={player.id} player={player} />
-              ))
-            )}
+  
+      <main className="flex-1 p-8 flex flex-col h-full bg-[#05080f]">
+        <div className="flex justify-between items-center mb-6 bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+          <div className="flex items-center gap-4">
+            <h2 className="text-2xl font-bold text-white">Základní jedenáctka</h2>
+            <div className="bg-sky-500/20 text-sky-400 px-4 py-1.5 rounded-full font-bold border border-sky-500/30 flex items-center gap-2">
+              <span>TÝM OVERALL:</span>
+              <span className="text-xl">{teamOverall}</span>
+            </div>
           </div>
+          
+          <button 
+            onClick={handleSave}
+            disabled={isSaving}
+            className="bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-sky-600/20"
+          >
+            {isSaving ? "Ukládám..." : "Uložit sestavu"}
+          </button>
         </div>
 
-      </div>
+        <div className="flex flex-col lg:flex-row gap-6 flex-1 min-h-0 select-none">
+          
+          
+          <div className="flex-1 bg-[#1a4a2b] rounded-xl relative border-[6px] border-[#0a1c10] overflow-hidden">
+          
+            <div className="absolute top-1/2 left-0 w-full h-[2px] bg-white/30 transform -translate-y-1/2 pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 w-32 h-32 border-[2px] border-white/30 rounded-full transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            <div className="absolute top-0 left-1/2 w-48 h-24 border-b-[2px] border-l-[2px] border-r-[2px] border-white/30 transform -translate-x-1/2 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-1/2 w-48 h-24 border-t-[2px] border-l-[2px] border-r-[2px] border-white/30 transform -translate-x-1/2 pointer-events-none"></div>
+            
+            {Object.entries(formation433).map(([posKey, posData]) => {
+              const playerInThisPosition = startingXI.find(p => p.pitchPosition === posKey);
+              return (
+                <PitchSlot key={posKey} positionKey={posKey} positionData={posData}>
+                  {playerInThisPosition && (
+                    <PlayerCard player={playerInThisPosition} isField={true} />
+                  )}
+                </PitchSlot>
+              );
+            })}
+          </div>
+
+         
+          <div 
+            ref={benchRef} 
+            className="w-full lg:w-96 bg-[#0a111a] rounded-xl p-5 border border-[#1a2533] overflow-y-auto flex flex-col"
+          >
+            <h2 className="text-lg font-bold text-sky-400 mb-4 sticky top-0 bg-[#0a111a] pb-2 border-b border-[#1a2533] z-10 uppercase tracking-wide">
+              Lavička ({benchAndReserves.length})
+            </h2>
+            
+            <div className="flex flex-col min-h-[100px] gap-2">
+              {benchAndReserves.length === 0 ? (
+                <p className="text-slate-500 text-sm text-center mt-8 pointer-events-none">Všichni hráči jsou na hřišti</p>
+              ) : (
+                benchAndReserves.map(player => (
+                   <PlayerCard key={player.id} player={player} />
+                ))
+              )}
+            </div>
+          </div>
+
+        </div>
+      </main>
     </div>
   );
 }

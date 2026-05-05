@@ -3,7 +3,7 @@
 import { auth } from "@/auth";
 import { notFound } from "next/navigation";
 import TeamManagementClient from "./actions/TeamManagementClient";
-import { PrismaClient } from "@/prisma/..app/generated/prisma/client";
+import { PrismaClient } from "@/app/generated/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 const prisma = new PrismaClient({

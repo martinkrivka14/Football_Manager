@@ -99,6 +99,7 @@ model SaveTeam {
   originalTeamId  Int
   originalTeam    Team      @relation(fields: [originalTeamId], references: [id]) 
   
+  teamOverall     Int      @default(0)
   
   budget          Int       @default(0) 
 
@@ -107,6 +108,15 @@ model SaveTeam {
   
   players         SavePlayer[] @relation("SaveTeamPlayers")
   managedBy       GameSave[]   @relation("ManagedTeam")
+
+ 
+  played       Int @default(0)
+  wins         Int @default(0) 
+  draws        Int @default(0)
+  losses       Int @default(0) 
+  goalsFor     Int @default(0) 
+  goalsAgainst Int @default(0) 
+  points       Int @default(0) 
 
 
   saveLineups SaveLineup[]

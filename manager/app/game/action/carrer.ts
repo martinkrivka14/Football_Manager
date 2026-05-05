@@ -1,6 +1,6 @@
 "use server"
 
-import { PrismaClient } from "@/prisma/..app/generated/prisma/client";
+import { PrismaClient } from "@/app/generated/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
@@ -17,7 +17,7 @@ type PlayerUpdateData = {
 };
 
 
-export async function saveLineup(saveId: string, teamId: string, playerUpdates: PlayerUpdateData[]) {
+export async function saveLineup(saveId: string, teamId: string, playerUpdates: PlayerUpdateData[], teamOverall: number) {
   try {
     await prisma.$transaction(async (tx) => {
      
@@ -55,6 +55,10 @@ export async function saveLineup(saveId: string, teamId: string, playerUpdates: 
           data: newEntries
         });
       }
+      await tx.saveTeam.update({
+        where: { id: teamId },
+        data: { teamOverall: teamOverall }  //vyresit
+      });
     });
 
     revalidatePath("/game/page/team");
@@ -88,7 +92,7 @@ export async function createNewGameSave(selectedGlobalTeamId: number) {
     },
   });
 
-  const newSave = await prisma.$transaction(async (tx) => {
+  const newSave = await prisma.$transaction(async (tx: any) => {
 
     const gameSave = await tx.gameSave.create({
       data: {
@@ -145,9 +149,46 @@ export async function createNewGameSave(selectedGlobalTeamId: number) {
       });
     }
 
+    
+
     return gameSave;
-  });
+
 
     
+  });    
   return newSave;
 }
+  export async function calculateAllTeamsOvr(saveId: string) {
+    try {
+      
+      const allTeams = await prisma.saveTeam.findMany({
+        where: { gameSaveId: saveId },
+        include: { players: { select: { overall: true } } }
+      });
+
+    
+      const updates = allTeams.map(team => {
+        const sortedPlayers = [...team.players].sort((a, b) => (b.overall || 0) - (a.overall || 0));
+        const top11 = sortedPlayers.slice(0, 11);
+        
+        const teamOvr = top11.length > 0 
+          ? Math.round(top11.reduce((sum, p) => sum + (p.overall || 0), 0) / top11.length)
+          : 0;
+
+        return prisma.saveTeam.update({
+          where: { id: team.id },
+          data: { teamOverall: teamOvr }//vyresit
+        });
+      });
+
+      
+      await prisma.$transaction(updates);
+
+      revalidatePath("/game/page/league");
+
+      return { success: true };
+    } catch (error) {
+      console.error("Chyba při výpočtu OVR:", error);
+      return { success: false };
+    }
+  }

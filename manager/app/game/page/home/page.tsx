@@ -2,7 +2,7 @@
 import { auth } from "@/auth";
 import TeamSelector from "./components/TeamSelector";
 import Link from "next/link";
-import { PrismaClient } from "@/prisma/..app/generated/prisma/client";
+import { PrismaClient } from "@/app/generated/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 const prisma = new PrismaClient({
