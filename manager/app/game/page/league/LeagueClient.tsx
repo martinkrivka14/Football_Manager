@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { calculateAllTeamsOvr } from "../../action/carrer";
+import { Link } from "lucide-react";
 
 type TeamStats = {
   id: string; name: string; logo: string | null; isUserTeam: boolean;
@@ -94,9 +95,11 @@ export default function LeagueClient({ leagues, userLeagueId, saveId }: { league
                 <td className="px-4 py-3 text-center font-bold">{index + 1}.</td>
                 <td className="px-4 py-3 flex items-center gap-3">
                   {team.logo && <img src={team.logo} alt="logo" className="w-6 h-6 object-contain" />}
-                  <span className={team.isUserTeam ? "font-bold text-sky-400" : "font-medium text-white"}>
+                  <Link 
+                    href={`/game/page/league/${team.id}`} 
+                    className={`hover:underline transition-colors ${team.isUserTeam ? "font-bold text-sky-400" : "font-medium text-white hover:text-sky-400"}`}>
                     {team.name}
-                  </span>
+                  </Link>
                 </td>
                 <td className="px-4 py-3 text-center font-mono text-slate-500">{team.teamOverall}</td>
                 <td className="px-4 py-3 text-center">{team.played}</td>

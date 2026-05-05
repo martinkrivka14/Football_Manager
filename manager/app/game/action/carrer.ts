@@ -158,37 +158,65 @@ export async function createNewGameSave(selectedGlobalTeamId: number) {
   });    
   return newSave;
 }
-  export async function calculateAllTeamsOvr(saveId: string) {
-    try {
-      
-      const allTeams = await prisma.saveTeam.findMany({
-        where: { gameSaveId: saveId },
-        include: { players: { select: { overall: true } } }
-      });
+  
+
+export async function calculateAllTeamsOvr(saveId: string) {
+  try {
+    const allTeams = await prisma.saveTeam.findMany({
+      where: { gameSaveId: saveId },
+      include: { 
+        players: { include: { originalPlayer: true } },
+        originalTeam: { include: { players: true } } 
+      }
+    });
+
+    const getCat = (pos: string | null) => {
+      if (!pos) return 'MID';
+      const p = pos.toUpperCase();
+      if (['GK', 'BR'].includes(p)) return 'GK';
+      if (['CB', 'LB', 'RB', 'LWB', 'RWB', 'PO', 'LO', 'SO'].includes(p)) return 'DEF';
+      if (['CDM', 'CM', 'CAM', 'LM', 'RM', 'SZ', 'LZ', 'PZ'].includes(p)) return 'MID';
+      if (['ST', 'CF', 'LW', 'RW', 'HÚ', 'LK', 'PK'].includes(p)) return 'ATT';
+      return 'MID';
+    };
+
+    const updates = allTeams.map(team => {
+      const players = team.players.length > 0 
+        ? team.players.map(p => ({ ovr: p.overall || p.originalPlayer?.overall || 0, pos: p.originalPlayer?.position }))
+        : team.originalTeam.players.map(p => ({ ovr: p.overall || 0, pos: p.position }));
 
     
-      const updates = allTeams.map(team => {
-        const sortedPlayers = [...team.players].sort((a, b) => (b.overall || 0) - (a.overall || 0));
-        const top11 = sortedPlayers.slice(0, 11);
-        
-        const teamOvr = top11.length > 0 
-          ? Math.round(top11.reduce((sum, p) => sum + (p.overall || 0), 0) / top11.length)
-          : 0;
-
-        return prisma.saveTeam.update({
-          where: { id: team.id },
-          data: { teamOverall: teamOvr }//vyresit
-        });
-      });
+      const gks = players.filter(p => getCat(p.pos) === 'GK').sort((a, b) => b.ovr - a.ovr);
+      const defs = players.filter(p => getCat(p.pos) === 'DEF').sort((a, b) => b.ovr - a.ovr);
+      const mids = players.filter(p => getCat(p.pos) === 'MID').sort((a, b) => b.ovr - a.ovr);
+      const atts = players.filter(p => getCat(p.pos) === 'ATT').sort((a, b) => b.ovr - a.ovr);
 
       
-      await prisma.$transaction(updates);
+      const selectedPlayers: number[] = [];
+      
+      
+      selectedPlayers.push(gks[0]?.ovr || 0);
+    
+      for (let i = 0; i < 4; i++) selectedPlayers.push(defs[i]?.ovr || 0);
+    
+      for (let i = 0; i < 3; i++) selectedPlayers.push(mids[i]?.ovr || 0);
+      
+      for (let i = 0; i < 3; i++) selectedPlayers.push(atts[i]?.ovr || 0);
 
-      revalidatePath("/game/page/league");
+      
+      const teamOvr = Math.round(selectedPlayers.reduce((a, b) => a + b, 0) / 11);
 
-      return { success: true };
-    } catch (error) {
-      console.error("Chyba při výpočtu OVR:", error);
-      return { success: false };
-    }
+      return prisma.saveTeam.update({
+        where: { id: team.id },
+        data: { teamOverall: teamOvr }
+      });
+    });
+
+    await prisma.$transaction(updates);
+    revalidatePath("/game/page/league");
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    return { success: false };
   }
+}
