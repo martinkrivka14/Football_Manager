@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import TeamManagementClient from "./actions/TeamManagementClient";
 import { PrismaClient } from "@/app/generated/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
+import NavMenuGame from "../../menu/navMenu";
+
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
@@ -15,7 +17,7 @@ export default async function TeamPage() {
   const userId = session?.user?.id;
 
   if (!userId) {
-    return <div>Musíš být přihlášen.</div>;
+    return <div>Musíš být přihlášen</div>;
   }
 
   const activeSave = await prisma.gameSave.findFirst({
@@ -42,7 +44,6 @@ export default async function TeamPage() {
 
  
 
-  // Pro snadnější hledání si vytáhneme jen 'entries' z naší uložené sestavy
   type CurrentLineupEntry = {
     savePlayerId: string;
     role: string;
@@ -76,7 +77,9 @@ export default async function TeamPage() {
   });
 
   return (
-    <div className="p-6 text-white h-full">
+    
+    <div className="p-6 text-white h-full bg-black">
+      
       <h1 className="text-3xl font-bold mb-6">Správa Týmu</h1>
       <TeamManagementClient 
         initialPlayers={players} 

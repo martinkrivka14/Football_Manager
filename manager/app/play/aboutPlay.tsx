@@ -1,6 +1,8 @@
 import Link from "next/link";
 
-export default function AboutPlay(){
+
+
+export default function AboutPlay({path}:{path:string}){
 
     return(
 
@@ -23,7 +25,7 @@ export default function AboutPlay(){
     </p>
 
     <div className="mt-10 flex justify-center gap-4">
-    <Link href={"../game"}>
+    <Link href={path}>
       <button className="px-7 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 transition font-semibold text-white">
         Start Game
       </button>

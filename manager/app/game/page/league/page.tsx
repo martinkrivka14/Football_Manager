@@ -2,6 +2,7 @@ import prisma from "@/lib/db";
 import { auth } from "@/auth";
 import { notFound } from "next/navigation";
 import LeagueClient from "./LeagueClient";
+import NavMenuGame from "../../menu/navMenu";
 
 export default async function LeaguePage() {
   const session = await auth();
@@ -34,12 +35,14 @@ export default async function LeaguePage() {
   activeSave.teams.forEach(saveTeam => {
     const globalLeague = saveTeam.originalTeam?.league;
     const leagueId = globalLeague?.id.toString() || "unknown";
-    const leagueName = globalLeague?.name || "Ostatní (bez ligy)";
+    const leagueName = globalLeague?.name || "Ostatní";
+    const originalLeagueId = globalLeague?.id || 999;
 
     if (!leaguesMap.has(leagueId)) {
       leaguesMap.set(leagueId, {
         id: leagueId,
         name: leagueName,
+        originalLeagueId: originalLeagueId,
         teams: []
       });
     }
@@ -75,6 +78,7 @@ export default async function LeaguePage() {
 
   return (
     <div className="p-8 h-full flex flex-col bg-[#05080f]">
+      <><NavMenuGame/></>
       <h1 className="text-3xl font-bold text-white mb-6">Ligové soutěže</h1>
       <LeagueClient 
         leagues={formattedLeagues} 

@@ -3,7 +3,6 @@ import { updatePlayersStats } from '../db/updatePlayersStats';
 
 export async function GET() {
   try {
-    // Tady jen zavoláme naši oddělenou logiku
     const result = await updatePlayersStats();
     
     return NextResponse.json(result);

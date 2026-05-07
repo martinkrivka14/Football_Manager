@@ -56,10 +56,10 @@ export async function updatePlayersStats() {
 
       let finalJerseyNumber = player.jerseyNumber;
       if (!finalJerseyNumber) {
-        finalJerseyNumber = i + 1; // Unikátní v rámci tohoto týmu
+        finalJerseyNumber = i + 1; 
       }
 
-      // Aktualizujeme hráče novými daty
+     
       await prisma.player.update({
         where: { id: player.id },
         data: {

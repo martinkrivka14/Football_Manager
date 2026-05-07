@@ -34,7 +34,7 @@ export default function NavMenuGame(){
         ].map(item => (
             <Link
             
-                href = {`game/page/${item.toLowerCase()}`}
+                href = {`/game/page/${item.toLowerCase()}`}
                 key={item}
                 className="cursor-pointer 
                            px-3 py-2 

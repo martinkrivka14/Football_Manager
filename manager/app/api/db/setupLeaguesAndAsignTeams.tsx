@@ -1,7 +1,7 @@
 import prisma from "../../../lib/db";
 
 export async function setupLeaguesAndAssignTeams() {
-  // 1. Definujeme anglickou hierarchii
+  
   const leagueNames = [
     "Premier League",
     "Championship",
@@ -11,7 +11,7 @@ export async function setupLeaguesAndAssignTeams() {
 
   const createdLeagues = [];
 
-  // Vytvoříme (nebo najdeme) ligy v DB
+ 
   for (const name of leagueNames) {
     let league = await prisma.league.findFirst({ where: { name } });
     if (!league) {
@@ -20,7 +20,7 @@ export async function setupLeaguesAndAssignTeams() {
     createdLeagues.push(league);
   }
 
-  // 2. Načteme všechny týmy
+  
   const allTeams = await prisma.team.findMany();
   
   if (allTeams.length === 0) {
@@ -30,11 +30,11 @@ export async function setupLeaguesAndAssignTeams() {
   const TEAMS_PER_LEAGUE = 20;
   let currentTeamIndex = 0;
 
-  // 3. Přiřadíme týmy do lig (po 20)
+  
   for (const league of createdLeagues) {
     const teamsForThisLeague = allTeams.slice(currentTeamIndex, currentTeamIndex + TEAMS_PER_LEAGUE);
     
-    if (teamsForThisLeague.length === 0) break; // Došly nám týmy
+    if (teamsForThisLeague.length === 0) break; 
 
     for (const team of teamsForThisLeague) {
       await prisma.team.update({
@@ -47,13 +47,13 @@ export async function setupLeaguesAndAssignTeams() {
     console.log(`Liga ${league.name} byla naplněna ${teamsForThisLeague.length} týmy.`);
   }
 
-  // 4. Smazání přebytečných týmů (pokud nějaké zbyly)
+  
   const leftoverTeams = allTeams.slice(currentTeamIndex);
   
   if (leftoverTeams.length > 0) {
     const leftoverTeamIds = leftoverTeams.map(t => t.id);
 
-    // Abychom mohli smazat tým, musíme nejdřív smazat jeho hráče a stadiony (Foreign Key constraints)
+    
     await prisma.player.deleteMany({
       where: { teamId: { in: leftoverTeamIds } }
     });
@@ -62,7 +62,7 @@ export async function setupLeaguesAndAssignTeams() {
       where: { teamId: { in: leftoverTeamIds } }
     });
 
-    // Nakonec smažeme samotné týmy
+   
     await prisma.team.deleteMany({
       where: { id: { in: leftoverTeamIds } }
     });

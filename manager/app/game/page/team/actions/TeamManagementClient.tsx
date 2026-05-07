@@ -8,6 +8,7 @@ import {
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { saveLineup } from "../../../action/carrer";
 import Link from "next/link"; 
+import NavMenuGame from "@/app/game/menu/navMenu";
 
 export type PlayerData = {
   id: string;
@@ -192,20 +193,7 @@ export default function TeamManagementClient({
   return (
     <div className="flex h-screen w-full bg-black text-white font-sans overflow-hidden">
 
-      <nav className="w-64 bg-[#0a111a] border-r border-[#1a2533] p-6 flex flex-col gap-6 flex-shrink-0">
-        <h1 className="text-xl font-bold text-sky-400 mb-2">Menu</h1>
-        <ul className="flex flex-col gap-4 text-slate-300">
-          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/home">Home</Link></li>
-          <li className="text-white font-semibold cursor-pointer"><Link href="/game/page/team">Team</Link></li>
-          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/training">Training</Link></li>
-          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/league">League</Link></li>
-          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/schedule">Schedule</Link></li>
-          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/players">Players</Link></li>
-          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/club">Club</Link></li>
-          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/transfers">Transfers</Link></li>
-          <li className="hover:text-white cursor-pointer transition-colors"><Link href="/game/page/academy">Academy</Link></li>
-        </ul>
-      </nav>
+      <><NavMenuGame/></>
 
   
       <main className="flex-1 p-8 flex flex-col h-full bg-[#05080f]">
@@ -221,7 +209,7 @@ export default function TeamManagementClient({
           <button 
             onClick={handleSave}
             disabled={isSaving}
-            className="bg-sky-600 hover:bg-sky-500 text-white font-bold py-2 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-sky-600/20"
+            className="bg-sky-600  text-white font-bold py-2 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg shadow-sky-600/20"
           >
             {isSaving ? "Ukládám..." : "Uložit sestavu"}
           </button>

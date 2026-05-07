@@ -148,14 +148,11 @@ export async function createNewGameSave(selectedGlobalTeamId: number) {
         data: { userTeamId: newManagedTeamId },
       });
     }
-
-    
-
     return gameSave;
-
-
-    
-  });    
+      }, {
+      maxWait: 5000,
+      timeout: 20000 
+      });   
   return newSave;
 }
   
@@ -170,41 +167,55 @@ export async function calculateAllTeamsOvr(saveId: string) {
       }
     });
 
+   
     const getCat = (pos: string | null) => {
       if (!pos) return 'MID';
       const p = pos.toUpperCase();
-      if (['GK', 'BR'].includes(p)) return 'GK';
-      if (['CB', 'LB', 'RB', 'LWB', 'RWB', 'PO', 'LO', 'SO'].includes(p)) return 'DEF';
-      if (['CDM', 'CM', 'CAM', 'LM', 'RM', 'SZ', 'LZ', 'PZ'].includes(p)) return 'MID';
-      if (['ST', 'CF', 'LW', 'RW', 'HÚ', 'LK', 'PK'].includes(p)) return 'ATT';
-      return 'MID';
+      
+      if (p === 'GOALKEEPER') return 'GK';
+      if (p === 'DEFENDER') return 'DEF';
+      if (p === 'MIDFIELDER') return 'MID';
+      if (p === 'ATTACKER') return 'ATT';
+      if (p === 'U') return 'UNI'; 
+      
+      return 'MID'; 
     };
 
     const updates = allTeams.map(team => {
       const players = team.players.length > 0 
         ? team.players.map(p => ({ ovr: p.overall || p.originalPlayer?.overall || 0, pos: p.originalPlayer?.position }))
-        : team.originalTeam.players.map(p => ({ ovr: p.overall || 0, pos: p.position }));
+        : team.originalTeam?.players.map(p => ({ ovr: p.overall || 0, pos: p.position })) || [];
 
-    
-      const gks = players.filter(p => getCat(p.pos) === 'GK').sort((a, b) => b.ovr - a.ovr);
-      const defs = players.filter(p => getCat(p.pos) === 'DEF').sort((a, b) => b.ovr - a.ovr);
-      const mids = players.filter(p => getCat(p.pos) === 'MID').sort((a, b) => b.ovr - a.ovr);
-      const atts = players.filter(p => getCat(p.pos) === 'ATT').sort((a, b) => b.ovr - a.ovr);
+      let teamOvr = 0;
 
-      
-      const selectedPlayers: number[] = [];
-      
-      
-      selectedPlayers.push(gks[0]?.ovr || 0);
-    
-      for (let i = 0; i < 4; i++) selectedPlayers.push(defs[i]?.ovr || 0);
-    
-      for (let i = 0; i < 3; i++) selectedPlayers.push(mids[i]?.ovr || 0);
-      
-      for (let i = 0; i < 3; i++) selectedPlayers.push(atts[i]?.ovr || 0);
+      if (players.length === 0) {
+        teamOvr = 60; 
+      } else {
+        const gks = players.filter(p => getCat(p.pos) === 'GK').sort((a, b) => b.ovr - a.ovr);
+        const defs = players.filter(p => getCat(p.pos) === 'DEF').sort((a, b) => b.ovr - a.ovr);
+        const mids = players.filter(p => getCat(p.pos) === 'MID').sort((a, b) => b.ovr - a.ovr);
+        const atts = players.filter(p => getCat(p.pos) === 'ATT').sort((a, b) => b.ovr - a.ovr);
+        const unis = players.filter(p => getCat(p.pos) === 'UNI').sort((a, b) => b.ovr - a.ovr);
 
-      
-      const teamOvr = Math.round(selectedPlayers.reduce((a, b) => a + b, 0) / 11);
+        const selectedPlayers: number[] = [];
+        const PENALTY = 40;
+
+        
+        const pickPlayer = (mainPool: {ovr: number}[], fallbackPool: {ovr: number}[]) => {
+          if (mainPool.length > 0) return mainPool.shift()!.ovr;
+          if (fallbackPool.length > 0) return fallbackPool.shift()!.ovr;
+          return PENALTY;
+        };
+        
+        
+        selectedPlayers.push(pickPlayer(gks, unis)); 
+        for (let i = 0; i < 4; i++) selectedPlayers.push(pickPlayer(defs, unis)); 
+        for (let i = 0; i < 3; i++) selectedPlayers.push(pickPlayer(mids, unis)); 
+        for (let i = 0; i < 3; i++) selectedPlayers.push(pickPlayer(atts, unis)); 
+
+        
+        teamOvr = Math.round(selectedPlayers.reduce((a, b) => a + b, 0) / 11);
+      }
 
       return prisma.saveTeam.update({
         where: { id: team.id },
@@ -212,11 +223,13 @@ export async function calculateAllTeamsOvr(saveId: string) {
       });
     });
 
+ 
     await prisma.$transaction(updates);
     revalidatePath("/game/page/league");
+    
     return { success: true };
   } catch (error) {
-    console.error(error);
+    console.error("Kritická chyba při výpočtu:", error);
     return { success: false };
   }
 }
