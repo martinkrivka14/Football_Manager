@@ -32,7 +32,6 @@ export default function Info() {
             <GetTeams/>
             </Suspense>*/}
         <>
-            <Button onClick={handleSubmit}>Akutalizovat databazi</Button>
             <Footer/>
         </>
         

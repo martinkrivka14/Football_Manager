@@ -65,6 +65,8 @@ export default function LeagueClient({
     router.refresh(); 
   };
 
+  onload = () => {handleCalculateOVR()};
+
 
   return (
     <div className="flex flex-col h-full bg-[#0a111a] p-6 rounded-xl border border-[#1a2533]">
@@ -85,17 +87,8 @@ export default function LeagueClient({
         ))}
       </div>
 
+      
 
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-sky-400">{activeLeague?.name}</h2>
-        <button 
-          onClick={handleCalculateOVR} 
-          disabled={isCalculating}
-          className="text-xs bg-slate-700 text-slate-300 px-3 py-1 rounded hover:bg-slate-600 disabled:opacity-50"
-        >
-          {isCalculating ? "Počítám..." : "Přepočítat OVR ostatních týmů"}
-        </button>
-      </div>
 
       <div className="overflow-x-auto rounded-lg border border-slate-800">
         <table className="w-full text-left text-sm text-slate-300 select-none">
