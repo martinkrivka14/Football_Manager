@@ -88,7 +88,12 @@ model GameSave {
   updatedAt   DateTime @updatedAt
 
   saveLineups SaveLineup[]
+
+  saveMatches SaveMatch[]
 }
+
+
+
 
 model SaveTeam {
   id              String    @id @default(cuid())
@@ -119,6 +124,10 @@ model SaveTeam {
   goalsAgainst Int @default(0) 
   points       Int @default(0) 
 
+  homeMatches   SaveMatch[] @relation("HomeMatches")
+  awayMatches   SaveMatch[] @relation("AwayMatches")
+  matchEvents   SaveMatchEvent[]
+
 
   saveLineups SaveLineup[]
 }
@@ -139,6 +148,8 @@ model SavePlayer {
   morale            String    @default("NORMAL")  
 
   lineupEntries     SaveLineupEntry[]
+
+  matchEvents   SaveMatchEvent[]
 }
 
 
@@ -190,6 +201,61 @@ model SaveLeague {
   
 
   saveTeams SaveTeam[]
+
+  currentRound     Int        @default(1)
+  totalRounds      Int        @default(0) 
+  seasonNumber     Int        @default(1)
+  status           String     @default("IN_PROGRESS")
+
+  matches          SaveMatch[]
+}
+
+model SaveMatch {
+  id           String     @id @default(cuid())
+
+  gameSaveId   String
+  gameSave     GameSave   @relation(fields: [gameSaveId], references: [id], onDelete: Cascade)
+
+  saveLeagueId String
+  saveLeague   SaveLeague @relation(fields: [saveLeagueId], references: [id], onDelete: Cascade)
+
+  round        Int
+
+  date         DateTime
+  homeTeamId   String
+  homeTeam     SaveTeam   @relation("HomeMatches", fields: [homeTeamId], references: [id])
+  awayTeamId   String
+  awayTeam     SaveTeam   @relation("AwayMatches", fields: [awayTeamId], references: [id])
+
+  status       String     @default("SCHEDULED")
+  
+
+  scoreHome    Int?
+  scoreAway    Int?
+
+  isUserMatch  Boolean    @default(false)
+
+  events       SaveMatchEvent[]
+
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model SaveMatchEvent {
+  id         String      @id @default(cuid())
+
+  matchId    String
+  match      SaveMatch   @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  minute     Int
+  type       String   
+  teamId     String
+  team       SaveTeam    @relation(fields: [teamId], references: [id])
+
+  playerId   String?
+  player     SavePlayer? @relation(fields: [playerId], references: [id])
+
+  detail     String?   
 }
 
 

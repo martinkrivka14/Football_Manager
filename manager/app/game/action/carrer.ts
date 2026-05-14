@@ -4,11 +4,11 @@ import { PrismaClient } from "@/app/generated/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { generateFixturesForAllLeagues } from "./scheduleGenerator";
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
 });
-
 
 type PlayerUpdateData = {
   id: string;
@@ -20,7 +20,6 @@ type PlayerUpdateData = {
 export async function saveLineup(saveId: string, teamId: string, playerUpdates: PlayerUpdateData[], teamOverall: number) {
   try {
     await prisma.$transaction(async (tx) => {
-     
       let lineup = await tx.saveLineup.findFirst({
         where: { saveTeamId: teamId }
       });
@@ -35,12 +34,10 @@ export async function saveLineup(saveId: string, teamId: string, playerUpdates: 
         });
       }
 
-     
       await tx.saveLineupEntry.deleteMany({
         where: { saveLineupId: lineup.id }
       });
 
-    
       const newEntries = playerUpdates
         .filter(p => p.squadRole !== "RESERVE")
         .map(p => ({
@@ -55,9 +52,10 @@ export async function saveLineup(saveId: string, teamId: string, playerUpdates: 
           data: newEntries
         });
       }
+      
       await tx.saveTeam.update({
         where: { id: teamId },
-        data: { teamOverall: teamOverall }  //vyresit
+        data: { teamOverall: teamOverall }
       });
     });
 
@@ -68,7 +66,6 @@ export async function saveLineup(saveId: string, teamId: string, playerUpdates: 
     return { success: false, error: "Nepodařilo se uložit sestavu." };
   }
 }
-
 
 export async function createNewGameSave(selectedGlobalTeamId: number) {
   const session = await auth();
@@ -98,7 +95,7 @@ export async function createNewGameSave(selectedGlobalTeamId: number) {
       data: {
         userId,
         saveName: `Kariéra - ${selectedGlobalTeam.name ?? "Nová hra"}`,
-        inGameDate: new Date("2025-07-01"),
+        inGameDate: new Date("2026-08-01"),
       },
     });
 
@@ -113,8 +110,8 @@ export async function createNewGameSave(selectedGlobalTeamId: number) {
         },
       });
 
-      for (const gTeam of gLeague.teams) {
-
+      const teamPromises = gLeague.teams.map(async (gTeam) => {
+        
         const saveTeam = await tx.saveTeam.create({
           data: {
             gameSaveId: gameSave.id,
@@ -139,8 +136,13 @@ export async function createNewGameSave(selectedGlobalTeamId: number) {
             })),
           });
         }
-      }
+      });
+
+      await Promise.all(teamPromises);
     }
+
+
+    await generateFixturesForAllLeagues(gameSave.id, tx);
 
     if (newManagedTeamId) {
       await tx.gameSave.update({
@@ -148,11 +150,14 @@ export async function createNewGameSave(selectedGlobalTeamId: number) {
         data: { userTeamId: newManagedTeamId },
       });
     }
+    
     return gameSave;
-      }, {
-      maxWait: 5000,
-      timeout: 20000 
-      });   
+    
+  }, {
+    maxWait: 5000,
+    timeout: 30000 
+  });   
+  
   return newSave;
 }
   
@@ -167,7 +172,6 @@ export async function calculateAllTeamsOvr(saveId: string) {
       }
     });
 
-   
     const getCat = (pos: string | null) => {
       if (!pos) return 'MID';
       const p = pos.toUpperCase();
@@ -200,20 +204,17 @@ export async function calculateAllTeamsOvr(saveId: string) {
         const selectedPlayers: number[] = [];
         const PENALTY = 40;
 
-        
         const pickPlayer = (mainPool: {ovr: number}[], fallbackPool: {ovr: number}[]) => {
           if (mainPool.length > 0) return mainPool.shift()!.ovr;
           if (fallbackPool.length > 0) return fallbackPool.shift()!.ovr;
           return PENALTY;
         };
         
-        
         selectedPlayers.push(pickPlayer(gks, unis)); 
         for (let i = 0; i < 4; i++) selectedPlayers.push(pickPlayer(defs, unis)); 
         for (let i = 0; i < 3; i++) selectedPlayers.push(pickPlayer(mids, unis)); 
         for (let i = 0; i < 3; i++) selectedPlayers.push(pickPlayer(atts, unis)); 
 
-        
         teamOvr = Math.round(selectedPlayers.reduce((a, b) => a + b, 0) / 11);
       }
 
@@ -223,7 +224,6 @@ export async function calculateAllTeamsOvr(saveId: string) {
       });
     });
 
- 
     await prisma.$transaction(updates);
     revalidatePath("/game/page/league");
     
